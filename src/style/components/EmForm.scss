@@ -1,0 +1,26 @@
+.em-form {
+  overflow: hidden;
+  .el-form-item {
+    .el-form-item__label{
+      font-weight: 700;
+    }
+    .el-input-number {
+      .el-input__inner {
+        text-align: left;
+      }
+    }
+    .el-input-number,
+    .el-select,
+    .el-cascader,
+    .el-date-editor.el-input,
+    .el-range-editor.el-input__inner {
+      width: 100% !important;
+    }
+    .el-color-picker{
+      display: block;
+    }
+    .el-rate{
+      display: inline-flex;
+    }
+  }
+}

@@ -6,6 +6,7 @@ export interface ServiceR extends AxiosInstance {
 }
 export interface RequestConfigR extends AxiosRequestConfig {
     isShowLoading?: boolean;
+    isTransformResponse?: boolean;
 }
 declare const _default: {
     /**
@@ -20,20 +21,20 @@ declare const _default: {
      */
     post(url: string, data?: Collection, config?: RequestConfigR): Promise<void>;
     /**
-       * put请求
-       */
+     * put请求
+     */
     put(url: string, data?: Collection, config?: RequestConfigR): Promise<void>;
     /**
-       * get请求
-       */
+     * get请求
+     */
     get(url: string, data?: Collection, config?: RequestConfigR): Promise<void>;
     /**
-       * delete 请求
-       */
+     * delete 请求
+     */
     delete(url: string, data?: Collection, config?: RequestConfigR): Promise<void>;
     /**
-       * 并发请求
-       */
+     * 并发请求
+     */
     all: typeof import("axios").all; /**
      * 并发请求结果分离
      */

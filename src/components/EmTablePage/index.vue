@@ -248,9 +248,9 @@
 						if (!keepSelect) {
 							clearSelect()
 						}
-						if (d?.code === 0 && d?.data) {
-							dataT.value = d?.data?.data || d?.data || []
-							total.value = d.data[props.totalKey] || 0
+						if (d) {
+							dataT.value = d?.data || d || []
+							total.value = d[props.totalKey] || 0
 						} else {
 							clearTableData()
 						}

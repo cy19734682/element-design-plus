@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import router from '@/router'
 import $request from '../../src/methods/request'
 
 export const useStore = defineStore('main', () => {
@@ -21,10 +20,9 @@ export const useStore = defineStore('main', () => {
         validateCode: validateCode
       }
       $request.post('/login',loginData).then((response: any) => {
-        const data = response.data
         isLogin.value = true
-        token.value = data?.token
-        nickname.value = data?.userInfo.username
+        token.value = response?.token
+        nickname.value = response?.userInfo.username
         resolve()
       }).catch(error => {
         reject(error)

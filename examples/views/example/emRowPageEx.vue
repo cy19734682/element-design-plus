@@ -175,13 +175,9 @@
 			.then(() => {
 				$request
 					.delete('/bt-table', { ids })
-					.then((e: any) => {
-						if (e?.code === 0) {
-							ElMessage.success('删除成功')
-							tableRef.value.getTableData()
-						} else {
-							ElMessage.error(e.msg || '删除失败')
-						}
+					.then(() => {
+            ElMessage.success('删除成功')
+            tableRef.value.getTableData()
 					})
 					.catch()
 			})
@@ -208,17 +204,12 @@
 			data['id'] = activeRow.value.id
 		}
 		$request[method]('/bt-table', data, { isShowLoading: true })
-			.then((e: any) => {
-				if (e?.code === 0) {
-					ElMessage.success(method === 'post' ? '新增成功' : '编辑成功')
-					tableRef.value.getTableData()
-					formModalRef.value.changeLoading(false)
-					formModalRef.value.close()
-					onClose()
-				} else {
-					formModalRef.value.changeLoading(false)
-					ElMessage.error(e.msg || method === 'post' ? '新增失败' : '编辑失败')
-				}
+			.then(() => {
+        ElMessage.success(method === 'post' ? '新增成功' : '编辑成功')
+        tableRef.value.getTableData()
+        formModalRef.value.changeLoading(false)
+        formModalRef.value.close()
+        onClose()
 			})
 			.catch((e) => {
 				formModalRef.value.changeLoading(false)

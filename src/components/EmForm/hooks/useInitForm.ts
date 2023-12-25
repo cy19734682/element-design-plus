@@ -1,187 +1,189 @@
+import type { Ref } from 'vue'
 import { isValidVal, myTypeof } from '../../../methods'
 import { cloneDeep, findIndex } from 'lodash-es'
 import $request from '../../../methods/request'
-import useState from './useState'
-import moment from 'moment/moment'
-
-const { formDataT, tempKeys, dataGroup, watchGroup } = useState()
-
-/**
- * 监听tempKeys项的值，然后赋值给dataGroup
- * @param a 改变的值
- * @param root form节点
- */
-const watchTempKeys = (a: Record<string, any>, root: Record<string, any>) => {
-	let d = dataGroup.value
-	let t = tempKeys.value
-	switch (root.type) {
-		case 'selectInput':
-			if (a) {
-				if (a.beforeKey) {
-					delete d[a.beforeKey]
-				}
-				if (a.key) {
-					if (root.selectKey) {
-						d[root.selectKey] = a.key
-						d[root.key] = a.val
-					} else {
-						d[a.key] = a.val
-						d[root.key] = a.key + ':' + a.val
-					}
-				} else {
-					d[root.key] = null
-				}
-			} else {
-				d[root.key] = null
-			}
-			break
-		case 'bdMap':
-			if (a) {
-				d[root.key] = a.lng
-				d[root.key2] = a.lat
-				if (root.key3) {
-					d[root.key3] = a.name
-				}
-			} else {
-				d[root.key] = null
-				d[root.key2] = null
-				if (root.key3) {
-					d[root.key3] = null
-				}
-			}
-			break
-		case 'input':
-		case 'inputNumber':
-		case 'switch':
-		case 'slider':
-		case 'rate':
-		case 'textarea':
-			if (a || a === 0) {
-				d[root.key] = a
-			} else {
-				if (root.type === 'inputNumber' || root.type === 'slider' || root.type === 'rate') {
-					d[root.key] = undefined
-				} else if (root.type === 'switch') {
-					d[root.key] = false
-				} else {
-					d[root.key] = null
-				}
-			}
-			break
-		case 'select':
-		case 'radio':
-		case 'checkbox':
-			if (root.booleanVal && !root.multiple) {
-				d[root.key] = isValidVal(a) ? Boolean(a) : null
-			} else if (root.multiple || root.type === 'checkbox') {
-				d[root.key] = Object.assign([], a)
-			} else {
-				d[root.key] = a
-			}
-			/*需要收集额外字段*/
-			if (root.collectLabel) {
-				let targetOption: any[] | Record<string, any>
-				if (root.multiple || root.type === 'checkbox') {
-					//值是数组
-					targetOption = root.options.filter((e: Record<string, any>) => a && a.indexOf(e.val) > -1)
-				} else {
-					targetOption = root.options.find((e: Record<string, any>) => e.val === a)
-				}
-				const setCollectChange = (it: Record<string, any>) => {
-					if (it.key && it.valKey) {
-						const collectTemp = formDataT.value.find((e) => e.key === it.key)
-						let td: any = null
-						if (Array.isArray(targetOption)) {
-							td = targetOption.map((e) => e[it.valKey])
-							d[it.key] = td
-							if (collectTemp && collectTemp.tempKey) {
-								t[collectTemp.tempKey] = td
-							}
-						} else {
-							if (targetOption && isValidVal(targetOption[it.valKey])) {
-								td = targetOption[it.valKey]
-							}
-							d[it.key] = td
-							if (collectTemp && collectTemp.tempKey) {
-								t[collectTemp.tempKey] = td
-							}
-						}
-					}
-				}
-				if (myTypeof(root.collectLabel) === 'Object') {
-					setCollectChange(root.collectLabel)
-				} else if (Array.isArray(root.collectLabel)) {
-					for (let l of root.collectLabel) {
-						setCollectChange(l)
-					}
-				}
-			}
-			break
-		case 'date':
-		case 'time':
-			let tp = root.dateType || 'date'
-			const fm: Record<string, any> = {
-				year: 'YYYY',
-				month: 'MM',
-				date: 'YYYY-MM-DD',
-				time: 'HH:mm:ss',
-				datetime: 'YYYY-MM-DD HH:mm:ss',
-				daterange: 'YYYY-MM-DD',
-				monthrange: 'YYYY-MM',
-				datetimerange: 'YYYY-MM-DD HH:mm:ss'
-			}
-			if (
-				tp === 'daterange' ||
-				tp === 'datetimerange' ||
-				tp === 'monthrange' ||
-				(root.type === 'time' && root.isRange)
-			) {
-				if (a && a[0] && a[1]) {
-					if (root.type === 'time' && root.isRange) {
-						d[root.key] = moment(a[0]).format(root.format || fm[root.type])
-						d[root.key2] = moment(a[1]).format(root.format || fm[root.type])
-					} else {
-						d[root.key] = moment(a[0]).format(root.format || fm[tp])
-						d[root.key2] = moment(a[1]).format(root.format || fm[tp])
-					}
-					if (tp === 'daterange' && root.addTime) {
-						d[root.key] += ' 00:00:00'
-						d[root.key2] += ' 23:59:59'
-					}
-				} else {
-					d[root.key] = null
-					d[root.key2] = null
-				}
-			} else {
-				if (a) {
-					if (root.type === 'time') {
-						d[root.key] = moment(a).format(root.format || fm[root.type])
-					} else {
-						d[root.key] = moment(a).format(root.format || fm[tp])
-					}
-					if (tp === 'date' && root.addTime) {
-						d[root.key] += ' 00:00:00'
-					}
-				} else {
-					d[root.key] = null
-				}
-			}
-			break
-	}
-}
+import moment from 'moment'
 
 /**
  * 初始化表单
  * @param formData
+ * @param formDataT
+ * @param tempKeys
+ * @param dataGroup
  */
-export default function (formData: any[] = []) {
-  for (let f of watchGroup.value) {//取消watch监听
-    f()
-  }
-  tempKeys.value = {}
-  watchGroup.value = []
-  dataGroup.value = {}
+export default function (
+	formData: any[] = [],
+	formDataT: Ref<any[]>,
+	tempKeys: Ref<Record<string, any>>,
+	dataGroup: Ref<Record<string, any>>
+) {
 	formDataT.value = cloneDeep(formData)
+	const watchGroup = ref<any[]>([])
+
+	/**
+	 * 监听tempKeys项的值，然后赋值给dataGroup
+	 * @param a 改变的值
+	 * @param root form节点
+	 */
+	const watchTempKeys = (a: Record<string, any>, root: Record<string, any>) => {
+		let d = dataGroup.value
+		let t = tempKeys.value
+		switch (root.type) {
+			case 'selectInput':
+				if (a) {
+					if (a.beforeKey) {
+						delete d[a.beforeKey]
+					}
+					if (a.key) {
+						if (root.selectKey) {
+							d[root.selectKey] = a.key
+							d[root.key] = a.val
+						} else {
+							d[a.key] = a.val
+							d[root.key] = a.key + ':' + a.val
+						}
+					} else {
+						d[root.key] = null
+					}
+				} else {
+					d[root.key] = null
+				}
+				break
+			case 'bdMap':
+				if (a) {
+					d[root.key] = a.lng
+					d[root.key2] = a.lat
+					if (root.key3) {
+						d[root.key3] = a.name
+					}
+				} else {
+					d[root.key] = null
+					d[root.key2] = null
+					if (root.key3) {
+						d[root.key3] = null
+					}
+				}
+				break
+			case 'input':
+			case 'inputNumber':
+			case 'switch':
+			case 'slider':
+			case 'rate':
+			case 'textarea':
+				if (a || a === 0) {
+					d[root.key] = a
+				} else {
+					if (root.type === 'inputNumber' || root.type === 'slider' || root.type === 'rate') {
+						d[root.key] = undefined
+					} else if (root.type === 'switch') {
+						d[root.key] = false
+					} else {
+						d[root.key] = null
+					}
+				}
+				break
+			case 'select':
+			case 'radio':
+			case 'checkbox':
+				if (root.booleanVal && !root.multiple) {
+					d[root.key] = isValidVal(a) ? Boolean(a) : null
+				} else if (root.multiple || root.type === 'checkbox') {
+					d[root.key] = Object.assign([], a)
+				} else {
+					d[root.key] = a
+				}
+				/*需要收集额外字段*/
+				if (root.collectLabel) {
+					let targetOption: any[] | Record<string, any>
+					if (root.multiple || root.type === 'checkbox') {
+						//值是数组
+						targetOption = root.options.filter((e: Record<string, any>) => a && a.indexOf(e.val) > -1)
+					} else {
+						targetOption = root.options.find((e: Record<string, any>) => e.val === a)
+					}
+					const setCollectChange = (it: Record<string, any>) => {
+						if (it.key && it.valKey) {
+							const collectTemp = formDataT.value.find((e) => e.key === it.key)
+							let td: any = null
+							if (Array.isArray(targetOption)) {
+								td = targetOption.map((e) => e[it.valKey])
+								d[it.key] = td
+								if (collectTemp && collectTemp.tempKey) {
+									t[collectTemp.tempKey] = td
+								}
+							} else {
+								if (targetOption && isValidVal(targetOption[it.valKey])) {
+									td = targetOption[it.valKey]
+								}
+								d[it.key] = td
+								if (collectTemp && collectTemp.tempKey) {
+									t[collectTemp.tempKey] = td
+								}
+							}
+						}
+					}
+					if (myTypeof(root.collectLabel) === 'Object') {
+						setCollectChange(root.collectLabel)
+					} else if (Array.isArray(root.collectLabel)) {
+						for (let l of root.collectLabel) {
+							setCollectChange(l)
+						}
+					}
+				}
+				break
+			case 'date':
+			case 'time':
+				let tp = root.dateType || 'date'
+				const fm: Record<string, any> = {
+					year: 'YYYY',
+					month: 'MM',
+					date: 'YYYY-MM-DD',
+					time: 'HH:mm:ss',
+					datetime: 'YYYY-MM-DD HH:mm:ss',
+					daterange: 'YYYY-MM-DD',
+					monthrange: 'YYYY-MM',
+					datetimerange: 'YYYY-MM-DD HH:mm:ss'
+				}
+				if (
+					tp === 'daterange' ||
+					tp === 'datetimerange' ||
+					tp === 'monthrange' ||
+					(root.type === 'time' && root.isRange)
+				) {
+					if (a && a[0] && a[1]) {
+						if (root.type === 'time' && root.isRange) {
+							d[root.key] = moment(a[0]).format(root.format || fm[root.type])
+							d[root.key2] = moment(a[1]).format(root.format || fm[root.type])
+						} else {
+							d[root.key] = moment(a[0]).format(root.format || fm[tp])
+							d[root.key2] = moment(a[1]).format(root.format || fm[tp])
+						}
+						if (tp === 'daterange' && root.addTime) {
+							d[root.key] += ' 00:00:00'
+							d[root.key2] += ' 23:59:59'
+						}
+					} else {
+						d[root.key] = null
+						d[root.key2] = null
+					}
+				} else {
+					if (a) {
+						if (root.type === 'time') {
+							d[root.key] = moment(a).format(root.format || fm[root.type])
+						} else {
+							d[root.key] = moment(a).format(root.format || fm[tp])
+						}
+						if (tp === 'date' && root.addTime) {
+							d[root.key] += ' 00:00:00'
+						}
+					} else {
+						d[root.key] = null
+					}
+				}
+				break
+		}
+	}
+
 	/*初始化表单项*/
 	const initDataGroup = () => {
 		for (let root of formDataT.value) {
@@ -424,23 +426,19 @@ export default function (formData: any[] = []) {
 			$request
 				.get(url)
 				.then((r: any) => {
-					if (r?.code === 0) {
-						let tOption = r?.data?.data || r?.data || []
-						root.options.length = 0
-						if (root.localOption) {
-							tOption.unshift(...root.localOption)
-						}
-						if (myTypeof(root.optionFilter) === 'Function') {
-							tOption = root.optionFilter(tOption)
-						}
-						if (root.optionLabel && root.optionVal) {
-							root.options = optionAssign(tOption, root)
-						}
-						if (isValidVal(itemVal)) {
-							recoverVal(itemVal, root)
-						}
-					} else {
-						console.warn(root.label + '：' + r?.msg || r?.message)
+					let tOption = r?.data || r || []
+					root.options.length = 0
+					if (root.localOption) {
+						tOption.unshift(...root.localOption)
+					}
+					if (myTypeof(root.optionFilter) === 'Function') {
+						tOption = root.optionFilter(tOption)
+					}
+					if (root.optionLabel && root.optionVal) {
+						root.options = optionAssign(tOption, root)
+					}
+					if (isValidVal(itemVal)) {
+						recoverVal(itemVal, root)
 					}
 				})
 				.catch((e) => {

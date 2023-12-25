@@ -83,11 +83,11 @@
 	)
 
 	let debounceCount: boolean = false
-	const { showLoading, formDataT, tempKeys, dataGroup, elFormRef } = useState() //表单初始值
-	const { initDataGroup, initItems } = useInitForm(props.formData) //初始化表单项
-	const { resetForm, reRenderForm, clearForm } = useClearForm(props.formData) //清空、重置表单
-	const { updateDataGroup, updateFormDataT } = useUpdateForm() //更新表单
-	const { changeLoading } = useLoading() //提交按钮loading
+	const { formDataT, tempKeys, dataGroup, elFormRef } = useState() //表单初始值
+	const { initDataGroup, initItems } = useInitForm(props.formData, formDataT, tempKeys, dataGroup) //初始化表单项
+	const { resetForm, reRenderForm, clearForm } = useClearForm(props.formData, formDataT, tempKeys, dataGroup, elFormRef) //清空、重置表单
+	const { updateDataGroup, updateFormDataT } = useUpdateForm(props.formData, formDataT, tempKeys, dataGroup, elFormRef) //更新表单
+	const { showLoading, changeLoading } = useLoading() //提交按钮loading
 	const formRulesT = computed(() => {
 		/*计算规则*/
 		let t = cloneDeep(props.formRules)
@@ -145,11 +145,11 @@
 		return showing
 	}
 
-	/**
-	 * 判断表单项是否展示（私有）
-	 * @param show 表单项的展示配置数据
-	 * @returns {boolean}
-	 */
+  /**
+   *
+   * 判断表单项是否展示（私有）
+   * @param show 表单项的展示配置数据
+   */
 	const dealIfItem = (show: Record<string, any>) => {
 		let isShow = false
 		if (Array.isArray(show.val)) {
@@ -316,8 +316,8 @@
 		})
 	}
 
-  initDataGroup() //初始化表单值
-  initItems() //初始化表单项
+	initDataGroup() //初始化表单值
+	initItems() //初始化表单项
 
 	defineExpose({
 		clearForm,

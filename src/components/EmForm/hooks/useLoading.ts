@@ -1,13 +1,10 @@
-import useState from './useState'
-
-const { showLoading } = useState()
 
 /**
  * 提交按钮loading效果
  * @returns {{}}
  */
 export default function () {
-  
+  const showLoading = ref<boolean>(false)
   /**
    * 主动改变表单按钮loading状态
    * @param v
@@ -20,6 +17,7 @@ export default function () {
   }
   
   return {
+    showLoading,
     changeLoading
   }
 }

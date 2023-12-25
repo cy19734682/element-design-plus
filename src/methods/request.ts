@@ -11,11 +11,18 @@ export interface ServiceR extends AxiosInstance {
 
 export interface RequestConfigR extends AxiosRequestConfig {
 	isShowLoading?: boolean
+	isTransformResponse?: boolean
+	isShowMessage?: boolean
 }
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 let Loading: any = null
 let Message: any = null
+let optionConfig: RequestConfigR = {
+	isShowLoading: false,
+	isTransformResponse: false,
+	isShowMessage: true
+}
 /**
  * axios接口请求设置公共参数
  */
@@ -46,13 +53,19 @@ service.interceptors.response.use(
 		Loading && Loading.close()
 		Message && Message.close()
 		ElMessageBox && ElMessageBox.close()
-		let { code, msg, message } = data
-		if (code === 0) {
+		const { isTransformResponse = false, isShowMessage = true } = optionConfig
+		let { code, msg, message, data: dataT } = data
+		//不需要处理，直接返回响应数据
+		if (isTransformResponse) {
 			return data
+		}
+		if (code === 0) {
+			return dataT
 		} else if (code === -999) {
 			ElMessageBox.confirm(t('em.loginTips.content'), t('em.loginTips.title'), {
 				confirmButtonText: t('em.loginTips.okTxt'),
 				cancelButtonText: t('em.button.cancel'),
+				closeOnClickModal: false,
 				type: 'warning'
 			})
 				.then(() => {
@@ -69,12 +82,16 @@ service.interceptors.response.use(
 			}
 			if (typeof message === 'object') {
 				//针对thinkjs返回的空值校验提示
-        message = Object.values(message).join(',')
+				message = Object.values(message).join(',')
 			}
-			Message = ElMessage({
-				message: msg || message || t('em.sysError'),
-				type: 'error'
-			})
+			if (isShowMessage) {
+				Message = ElMessage({
+					message: msg || message || t('em.sysError'),
+					type: 'error'
+				})
+			} else {
+				console.warn(msg || message || t('em.sysError'))
+			}
 			return Promise.reject(new Error(msg || message || 'Error'))
 		}
 	},
@@ -88,7 +105,7 @@ service.interceptors.response.use(
 		}
 		if (typeof message === 'object') {
 			//针对thinkjs返回的空值校验提示
-      message = Object.values(message).join(',')
+			message = Object.values(message).join(',')
 		}
 		Message = ElMessage({
 			message: message || t('em.sysError'),
@@ -106,13 +123,13 @@ function logoutHandle() {
 		if (typeof service.store === 'function') {
 			const store = service.store()
 			if (store.logout) {
-				store.logout().then(() => {
-          loginToRouter()
-        })
+				store.logout().then((router: string) => {
+					loginToRouter(router)
+				})
 			}
 		} else {
-			service.store.logout().then(() => {
-        loginToRouter()
+			service.store.logout().then((router: string) => {
+				loginToRouter(router)
 			})
 		}
 	} else {
@@ -123,12 +140,15 @@ function logoutHandle() {
 /**
  * 通过路由跳转登录页面
  */
-function loginToRouter(){
-  if (service.router) {
-    service.router.push({path: '/login', query:{redirect: service.router.currentRoute.value.fullPath}})
-  } else {
-    console.warn('router为空，请在安装插件时传入router实例：Vue.use(elmDesign,{router:router})')
-  }
+function loginToRouter(router?: string) {
+	if (service.router) {
+		service.router.push({
+			path: router || '/login',
+			query: { redirect: service.router.currentRoute.value.fullPath }
+		})
+	} else {
+		console.warn('router为空，请在安装插件时传入router实例：Vue.use(elmDesign,{router:router})')
+	}
 }
 
 /**
@@ -145,6 +165,7 @@ function checkRequest(
 	config?: RequestConfigR
 ) {
 	return new Promise<void>((s, j) => {
+		optionConfig = config || {}
 		if (url) {
 			if (config?.isShowLoading) {
 				Loading = ElLoading.service({
@@ -179,14 +200,14 @@ export default {
 	 * @param store 项目中vuex的store
 	 * @param router 项目中路由管理
 	 */
-	init(store:any, router: any) {
+	init(store: any, router: any) {
 		service.store = store
 		service.router = router
 	},
 	/**
 	 * post 请求
 	 */
-  post(url: string, data?: Collection, config?: RequestConfigR) {
+	post(url: string, data?: Collection, config?: RequestConfigR) {
 		return new Promise<void>((s, j) => {
 			checkRequest('post', url, data, config)
 				.then((r) => {
@@ -197,7 +218,7 @@ export default {
 				})
 		})
 	},
-  /**
+	/**
 	 * put请求
 	 */
 	put(url: string, data?: Collection, config?: RequestConfigR) {
@@ -211,7 +232,7 @@ export default {
 				})
 		})
 	},
-  /**
+	/**
 	 * get请求
 	 */
 	get(url: string, data?: Collection, config?: RequestConfigR) {
@@ -225,7 +246,7 @@ export default {
 				})
 		})
 	},
-  /**
+	/**
 	 * delete 请求
 	 */
 	delete(url: string, data?: Collection, config?: RequestConfigR) {
@@ -239,7 +260,7 @@ export default {
 				})
 		})
 	},
-  /**
+	/**
 	 * 并发请求
 	 */
 	all: axios.all /**

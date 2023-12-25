@@ -121,13 +121,11 @@
 			$request
 				.get(props.url)
 				.then((d: any) => {
-					if (d?.code === 0) {
-						let data = d?.data || []
-						if (typeof props.optionFilter === 'function' && myTypeof(props.optionFilter) === 'Function') {
-							data = props.optionFilter(data)
-						}
-						options.value = dataFilter(data)
-					}
+          let data = d || []
+          if (typeof props.optionFilter === 'function' && myTypeof(props.optionFilter) === 'Function') {
+            data = props.optionFilter(data)
+          }
+          options.value = dataFilter(data)
 				})
 				.catch((e) => {
 					console.warn(e)

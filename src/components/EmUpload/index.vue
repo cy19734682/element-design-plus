@@ -258,14 +258,10 @@
 		$request
 			.post(props.url, { url: fetchUrl.value, ...props.paramData }, { isShowLoading: true })
 			.then((d: any) => {
-				if (d?.code === 0 && d?.data) {
-					fileData.value = [d.data]
-					emitFileChange(fileData.value.map((e: any) => e.url))
-					ElMessage.success('上传成功')
-					fetchModalVisible.value = false
-				} else {
-					ElMessage.error(d?.msg || d?.message || '上传失败')
-				}
+        fileData.value = [d]
+        emitFileChange(fileData.value.map((e: any) => e.url))
+        ElMessage.success('上传成功')
+        fetchModalVisible.value = false
 			})
 			.catch((e) => {
 				console.warn(e)

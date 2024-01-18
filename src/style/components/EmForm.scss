@@ -9,8 +9,10 @@
         text-align: left;
       }
     }
+    .em-upload,
     .el-input-number,
     .el-select,
+    .el-switch,
     .el-cascader,
     .el-date-editor.el-input,
     .el-range-editor.el-input__inner {
@@ -21,6 +23,11 @@
     }
     .el-rate{
       display: inline-flex;
+    }
+    .em-item-info{
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.5;
     }
   }
 }

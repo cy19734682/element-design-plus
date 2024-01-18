@@ -69,6 +69,10 @@ export interface FormItem {
     defaultVal?: any;
     defaultVal2?: any;
     disabled?: boolean;
+    disabledDate?: Function;
+    disabledHours?: Function;
+    disabledMinutes?: Function;
+    disabledSeconds?: Function;
     disabledVoidColor?: string;
     editorConfig?: object;
     endPlaceholder?: string;

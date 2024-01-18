@@ -17,24 +17,28 @@
 			inlineClearBtTxt?: string
 			inlineOkBtIcon?: any
 			inlineClearBtIcon?: any
+      showBeginBtn?: boolean //是否展示开头标签
 		}>(),
 		{
 			formData: () => [],
 			inlineOkBtTxt: t('em.button.search'),
 			inlineClearBtTxt: t('em.button.reset'),
 			inlineOkBtIcon: Search,
-			inlineClearBtIcon: Refresh
+			inlineClearBtIcon: Refresh,
+      showBeginBtn: true
 		}
 	)
 
 	const searchFormRef = ref<any>()
 	const formDataT = ref<any[]>([])
 	const formDataC = computed(() => {
-		let startCustom:Record<string, any> = {
-			type: 'custom',
-			slotName: 'beginBtnGroup'
-		}
-		formDataT.value.unshift(startCustom)
+    if(props.showBeginBtn){
+      let startCustom:Record<string, any> = {
+        type: 'custom',
+        slotName: 'beginBtnGroup'
+      }
+      formDataT.value.unshift(startCustom)
+    }
 		return formDataT.value.filter((e) => e.type === 'custom')
 	})
 

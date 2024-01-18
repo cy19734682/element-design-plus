@@ -7,6 +7,7 @@ export interface ServiceR extends AxiosInstance {
 export interface RequestConfigR extends AxiosRequestConfig {
     isShowLoading?: boolean;
     isTransformResponse?: boolean;
+    isShowMessage?: boolean;
 }
 declare const _default: {
     /**

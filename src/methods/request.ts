@@ -179,7 +179,7 @@ function checkRequest(
 			} else if (method === 'delete') {
 				reqData = { data: data }
 			}
-			service[method](url, reqData)
+			service[method](url, reqData, config)
 				.then((r: any) => {
 					s(r)
 				})

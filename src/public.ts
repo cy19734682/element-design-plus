@@ -90,6 +90,14 @@ export interface FormItem {
 
 	disabled?: boolean //是否禁用
   
+  disabledDate?: Function //el-date-picker 用来判断该日期是否被禁用的函数
+  
+  disabledHours?: Function //el-time-picker 禁止选择部分小时选项
+  
+  disabledMinutes?: Function //el-time-picker 禁止选择部分分钟选项
+  
+  disabledSeconds?: Function //el-time-picker 禁止选择部分秒选项
+  
   disabledVoidColor?: string //Rate 只读时未选中 icon 的颜色
 
 	editorConfig?: object //editor 编辑框配置

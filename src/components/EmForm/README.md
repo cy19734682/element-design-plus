@@ -552,29 +552,31 @@ methods: {
 
 #### date 日期组件
 
-|        参数        |             说明              |   类型   |                                         可选值                                          | 默认值  |
-|:----------------:|:---------------------------:|:------:|:------------------------------------------------------------------------------------:|:----:|
-|       key2       |     当使用了范围选择时结束时间的key值         | String |                                          —                                           |  —   |
-|     dateType     |            显示类型                | String | year/month/date/dates/months/years week/datetime/datetimerange/ daterange/monthrange |  —   |
-|      align       |            对齐方式             | String |                                 left, center, right                                  | left |
-|  rangeSeparator  |          选择范围时的分隔符          | String |                                          —                                           |  -   |
-|   placeholder    |          非范围选择时占位符          | String |                                          —                                           | 选择日期 |
-| startPlaceholder |        范围选择时开始日期的占位符        | String |                                          —                                           | 开始日期 |
-|  endPlaceholder  |        范围选择时结束日期的占位符        | String |                                          —                                           | 结束日期 |
-|  pickerOptions   | 当前时间日期选择器特有的选项(参考el-date组件) | Object |                                          —                                           |  {}  |
+|        参数        |                  说明                   |    类型    |                                         可选值                                          | 默认值  |
+|:----------------:|:-------------------------------------:|:--------:|:------------------------------------------------------------------------------------:|:----:|
+|       key2       |          当使用了范围选择时结束时间的key值           |  String  |                                          —                                           |  —   |
+|     dateType     |                 显示类型                  |  String  | year/month/date/dates/months/years week/datetime/datetimerange/ daterange/monthrange |  —   |
+|      align       |                 对齐方式                  |  String  |                                 left, center, right                                  | left |
+|  rangeSeparator  |               选择范围时的分隔符               |  String  |                                          —                                           |  -   |
+|   placeholder    |               非范围选择时占位符               |  String  |                                          —                                           | 选择日期 |
+| startPlaceholder |             范围选择时开始日期的占位符             |  String  |                                          —                                           | 开始日期 |
+|  endPlaceholder  |             范围选择时结束日期的占位符             |  String  |                                          —                                           | 结束日期 |
+|   disabledDate   | 一个用来判断该日期是否被禁用的函数(参考el-date-picker组件) | Function |                                          —                                           |  -   |
 
 #### time 时间组件
 
-|        参数        |             说明              |   类型    |         可选值         |  默认值  |
-|:----------------:|:---------------------------:|:-------:|:-------------------:|:-----:|
-|       key2       |     当使用了范围选择时结束时间的key值         | String  |          —          |   —   |
-|     isRange      |         是否为时间范围选择              | Boolean |          —          | false |
-|      align       |            对齐方式             | String  | left, center, right | left  |
-|  rangeSeparator  |          选择范围时的分隔符          | String  |          —          |   -   |
-|   placeholder    |          非范围选择时占位符          | String  |          —          | 选择时间  |
-| startPlaceholder |        范围选择时开始时间的占位符        | String  |          —          | 开始时间  |
-|  endPlaceholder  |        范围选择时结束时间的占位符        | String  |          —          | 结束时间  |
-|  pickerOptions   | 当前时间日期选择器特有的选项(参考el-time组件) | Object  |          —          |  {}   |
+|        参数        |               说明               |    类型    |         可选值         |  默认值  |
+|:----------------:|:------------------------------:|:--------:|:-------------------:|:-----:|
+|       key2       |       当使用了范围选择时结束时间的key值       |  String  |          —          |   —   |
+|     isRange      |           是否为时间范围选择            | Boolean  |          —          | false |
+|      align       |              对齐方式              |  String  | left, center, right | left  |
+|  rangeSeparator  |           选择范围时的分隔符            |  String  |          —          |   -   |
+|   placeholder    |           非范围选择时占位符            |  String  |          —          | 选择时间  |
+| startPlaceholder |         范围选择时开始时间的占位符          |  String  |          —          | 开始时间  |
+|  endPlaceholder  |         范围选择时结束时间的占位符          |  String  |          —          | 结束时间  |
+|  disabledHours   | 禁止选择部分小时选项(参考el-time-picker组件) | Function |          —          |   -   |
+| disabledMinutes  | 禁止选择部分分钟选项(参考el-time-picker组件) | Function |          —          |   -   |
+| disabledSeconds  | 禁止选择部分秒选项(参考el-time-picker组件)  | Function |          —          |   -   |
 
 #### EmSelectInput 下拉选择输入框
 

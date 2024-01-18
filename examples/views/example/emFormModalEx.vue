@@ -5,7 +5,6 @@
 		name: 'EmFormModalEx'
 	})
 
-	const formGroupRef = ref<any>()
 	const formData = ref<any[]>([
 		{
 			type: 'input',
@@ -45,6 +44,15 @@
 				}
 			]
 		},
+    {
+      type: 'select',
+      label: '品牌',
+      key: 'brandId',
+      asyncOption: true,
+      optionUrl: '/brand',
+      optionLabel: 'name',
+      optionVal: 'id'
+    },
 		{
 			type: 'select',
 			label: '借用数据',
@@ -189,6 +197,7 @@
 				education: 3,
 				wbId: 2,
 				devId: 81,
+        brandId: 1,
 				date: '2023-05-01',
 				time: '14:29:10',
 				datetime: '2023-01-05 11:12:52',

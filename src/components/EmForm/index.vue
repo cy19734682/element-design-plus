@@ -416,7 +416,7 @@
 						v-model="tempKeys[item.tempKey]"
 						:disabled="item.disabled || disabled"
 						:min="item.min || 0"
-						:max="item.min || 100"
+						:max="item.max || 100"
 						:step="item.step || 1"
 						:show-stops="item.showStops"
 						:show-tooltip="item.showTooltip"
@@ -432,7 +432,7 @@
 						v-else-if="item.type === 'rate'"
 						v-model="tempKeys[item.tempKey]"
 						:disabled="item.disabled || disabled"
-						:max="item.min || 5"
+						:max="item.max || 5"
 						:allow-half="item.allowHalf"
 						:colors="item.colors"
 						:void-color="item.voidColor"
@@ -568,7 +568,7 @@
 						:placeholder="item.placeholder || t('el.datepicker.selectDate')"
 						:start-placeholder="item.startPlaceholder || t('el.datepicker.startDate')"
 						:end-placeholder="item.endPlaceholder || t('el.datepicker.endDate')"
-						:picker-options="item.pickerOptions"
+						:disabled-date="item.disabledDate"
 						:disabled="item.disabled || disabled"
 						@change="itemChange($event, item)"
 					>
@@ -583,7 +583,9 @@
 						:placeholder="item.placeholder || t('el.datepicker.selectTime')"
 						:start-placeholder="item.startPlaceholder || t('el.datepicker.startTime')"
 						:end-placeholder="item.endPlaceholder || t('el.datepicker.endTime')"
-						:picker-options="item.pickerOptions"
+						:disabled-hours="item.disabledHours"
+						:disabled-minutes="item.disabledMinutes"
+						:disabled-seconds="item.disabledSeconds"
 						:disabled="item.disabled || disabled"
 						@change="itemChange($event, item)"
 					>
@@ -708,6 +710,8 @@
 					<div v-else-if="item.type === 'custom'" class="inlineBlock wd100">
 						<slot :name="item.slotName" :data-group="dataGroup" />
 					</div>
+          <!--表单项提示文字-->
+          <div v-if="Boolean(item.info)" class="em-item-info" :style="{color: item.infoColor || '#409eff'}">{{ item.info }}</div>
 				</el-form-item>
 			</template>
 			<!--长提交按钮-->

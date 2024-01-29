@@ -607,7 +607,7 @@
 						:disabled="item.disabled || disabled"
 						:with-credentials="item.withCredentials"
 						:upload-fetch="item.uploadFetch"
-						@on-file-change="reValidateAndChangeHandle($event, item)"
+						@update:modelValue="reValidateAndChangeHandle($event, item)"
 					/>
 					<!--行政区域级联-->
 					<em-cascader-area

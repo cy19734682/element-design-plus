@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { ElDialog, ElUpload, ElButton, ElInput, ElIcon } from 'element-plus'
   import { t } from '../../locale'
-	import { isArray } from 'lodash-es'
+	import { isArray,cloneDeep } from 'lodash-es'
 	import { imageSplicing, isValidVal } from '../../methods'
 	import $request from '../../methods/request'
 	import { ElMessage } from 'element-plus'
@@ -11,7 +11,7 @@
 		name: 'EmUpload'
 	})
 
-	const emit = defineEmits(['update:modelValue', 'on-name-change'])
+	const emit = defineEmits(['update:modelValue'])
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: string | number | any[] | File //绑定值
@@ -51,7 +51,6 @@
 	let fetchModalVisible = ref<boolean>(false) //网络图片抓取弹窗是否展示
 	let fetchUrl = ref<string>('') //网络图片抓取弹窗是否展示
 	let fileData = ref<any[]>([]) //文件上传数据
-	let tempData = ref<any[]>([]) //临时上传数据
 
 	const headersT = computed(() => {
 		let header: Record<string, any> = {}
@@ -169,16 +168,14 @@
 	 * 上传成功回调
 	 * @param res
 	 * @param file
+	 * @param files
 	 */
-	const handleUploadSuccess = (res: any, file: any) => {
+	const handleUploadSuccess = (res: any, file: any, files: any) => {
 		if (res?.code === 0) {
-			let url = res.data
-			tempData.value.push({
-				uid: file.uid,
-				name: file.name,
-				url: url
-			})
-			emitFileChange(tempData.value.map((e: any) => e.url))
+      let _f = fileData.value
+      file.url = res.data.url || res.data || ''
+      _f?.push(file)
+			emitFileChange(_f.map((e: any) => e.url))
 		} else {
 			ElMessage.error(res?.msg || res?.message || '上传失败')
 		}
@@ -225,12 +222,8 @@
 	const handleRemove = (file: any, fileList: any[]) => {
 		if (file) {
 			if (props.autoUpload) {
-				//tempData中的uid和fileData中的不一致，所以这里使用fileData查询下标
-				let _index = fileData.value.findIndex((e: any) => e.uid === file.uid)
-				if (_index > -1) {
-					tempData.value.splice(_index, 1)
-					emitFileChange(tempData.value.map((e: any) => e.url))
-				}
+        const _fileData = cloneDeep(fileData.value)
+        emitFileChange(_fileData.map((e: any) => e.url))
 			} else {
 				let _index = fileData.value.findIndex((e: any) => e.uid === file.uid)
 				if (_index > -1) {

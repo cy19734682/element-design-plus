@@ -17,8 +17,7 @@
 			v-model="id"
 			fileName="files"
 			listType="picture-card"
-			:autoUpload="false"
-			@on-file-change="onfileChange"
+			@update:modelValue="onfileChange"
 		/>
 	</div>
 </template>

@@ -23,8 +23,8 @@
 <template>
   <div class="lang">
     <el-radio-group v-model="language">
-      <el-radio label="zh-cn">中文</el-radio>
-      <el-radio label="en">English</el-radio>
+      <el-radio value="zh-cn">中文</el-radio>
+      <el-radio value="en">English</el-radio>
     </el-radio-group>
   </div>
 </template>

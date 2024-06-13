@@ -305,7 +305,7 @@
 			<!--单选框-->
 			<el-table-column v-if="radio" width="50" align="center">
 				<template #default="scope">
-					<el-radio :label="scope.row[defaultId]" v-model="onlyId"><span></span></el-radio>
+					<el-radio :value="scope.row[defaultId]" v-model="onlyId"><span></span></el-radio>
 				</template>
 			</el-table-column>
 			<el-table-column

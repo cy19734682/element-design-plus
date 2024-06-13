@@ -225,23 +225,21 @@
 						<el-radio-button
 							v-for="radioItem of item.options"
 							:key="'radioItem' + radioItem.val"
-							:label="radioItem.val"
+							:value="radioItem.val"
+							:label="radioItem.label || radioItem.val"
 							:border="item.itemBorder || false"
 							:disabled="!!radioItem.disabled"
-						>
-							<span>{{ radioItem.label || radioItem.val }}</span>
-						</el-radio-button>
+						/>
 					</template>
 					<template v-else>
 						<el-radio
 							v-for="radioItem of item.options"
 							:key="'radioItem' + radioItem.val"
-							:label="radioItem.val"
+							:value="radioItem.val"
+							:label="radioItem.label || radioItem.val"
 							:border="item.itemBorder || false"
 							:disabled="!!radioItem.disabled"
-						>
-							<span>{{ radioItem.label || radioItem.val }}</span>
-						</el-radio>
+						/>
 					</template>
 				</el-radio-group>
 				<!--多选组-->
@@ -257,23 +255,21 @@
 						<el-checkbox-button
 							v-for="checkItem of item.options"
 							:key="'optionItem' + checkItem.val"
-							:label="checkItem.val"
+							:value="checkItem.val"
+							:label="checkItem.label || checkItem.val"
 							:border="item.itemBorder || false"
 							:disabled="!!checkItem.disabled"
-						>
-							<span>{{ checkItem.label || checkItem.val }}</span>
-						</el-checkbox-button>
+						/>
 					</template>
 					<template v-else>
 						<el-checkbox
 							v-for="checkItem of item.options"
 							:key="'optionItem' + checkItem.val"
-							:label="checkItem.val"
+							:value="checkItem.val"
+							:label="checkItem.label || checkItem.val"
 							:border="item.itemBorder || false"
 							:disabled="!!checkItem.disabled"
-						>
-							<span>{{ checkItem.label || checkItem.val }}</span>
-						</el-checkbox>
+						/>
 					</template>
 				</el-checkbox-group>
 				<!--多行文本框-->

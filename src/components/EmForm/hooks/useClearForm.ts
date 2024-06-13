@@ -139,7 +139,9 @@ export default function (
 	const resetForm = () => {
 		return new Promise<void>((r) => {
 			clearForm()
-			elFormRef.value.resetFields()
+      nextTick(() => {
+        elFormRef.value.resetFields()
+      })
 			r()
 		})
 	}

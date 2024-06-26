@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-  import { ElColorPicker } from 'element-plus'
+  import {ElColorPicker, ElIcon} from 'element-plus'
+  import {Plus} from '@element-plus/icons-vue'
   defineOptions({
     name: 'EmColorGroup'
   })
@@ -10,12 +11,14 @@
 			showAlpha?: boolean //是否显示透明色
 			remain?: number //剩余几个时不可删除
 			isAddDel?: boolean //是否可以新增和删除
+      size?: 'large' | 'default' | 'small'
 		}>(),
 		{
-			modelValue: () => [],
+			modelValue: () => ['#ffffff'],
 			showAlpha: false,
 			remain: 0,
-			isAddDel: true
+			isAddDel: true,
+      size: 'small'
 		}
 	)
 
@@ -75,18 +78,20 @@
 	<div class="em-colors-box">
 		<template v-if="valueT && valueT.length > 0">
 			<div class="colors-item" v-for="(item, index) in valueT" :key="index + item">
-				<div class="colors-item-bar" v-if="isAddDel">
+				<div class="colors-item-bar" :class="size" v-if="isAddDel">
 					<div class="colors-item-tool" @click="removeColor(index)">-</div>
 					<div class="colors-item-tool" @click="addColor(index)">+</div>
 				</div>
 				<el-color-picker
-					size="small"
+					:size="size"
 					v-model="colorObj['val' + index]"
 					@change="changeHandle($event, index)"
 					:show-alpha="showAlpha"
 				/>
 			</div>
 		</template>
-		<div class="colors-item" v-if="isAddDel"><i class="el-icon-plus" @click="addColor()"></i></div>
+		<div class="colors-item" v-if="isAddDel">
+      <el-icon class="el-icon-plus" @click="addColor()"><Plus /></el-icon>
+    </div>
 	</div>
 </template>

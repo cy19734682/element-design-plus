@@ -60,10 +60,6 @@
 			borrowOption: 'education',
 			optionLabel: 'name',
 			optionVal: 'id',
-			collectLabel: {
-				valKey: 'mimeType',
-				key: 'mine2'
-			}
 		},
 		{
 			type: 'select',
@@ -88,6 +84,10 @@
 					notRequired: true
 				}
 			],
+      collectLabel: {
+        valKey: 'mimeType',
+        key: 'mineDev'
+      },
 			localOption: [
 				{
 					id: 998,
@@ -100,6 +100,19 @@
 					mimeType: 't2'
 				}
 			]
+		},
+    {
+			type: 'select',
+			label: '图片Id',
+			key: 'imgId',
+			asyncOption: true,
+			optionUrl: '/bt-table?imgId=1',
+			optionLabel: 'name',
+			optionVal: 'id',
+			collectLabel: {
+				valKey: 'mimeType',
+				key: 'mineImg'
+			}
 		},
 		{
 			type: 'date',
@@ -197,6 +210,7 @@
 				education: 3,
 				wbId: 2,
 				devId: 81,
+        imgId: 80,
         brandId: 1,
 				date: '2023-05-01',
 				time: '14:29:10',

@@ -274,6 +274,7 @@
 	})
 
 	defineExpose({
+    onlyId,
     dataT,
 		dataS,
 		selectedIds,

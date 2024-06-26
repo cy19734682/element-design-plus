@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 	import { ElDialog, ElUpload, ElButton, ElInput, ElIcon } from 'element-plus'
-  import { t } from '../../locale'
-	import { isArray,cloneDeep } from 'lodash-es'
+	import { t } from '../../locale'
+	import { isArray, cloneDeep } from 'lodash-es'
 	import { imageSplicing, isValidVal } from '../../methods'
 	import $request from '../../methods/request'
 	import { ElMessage } from 'element-plus'
-	import { Plus } from '@element-plus/icons-vue'
+	import { Plus, Close } from '@element-plus/icons-vue'
 
 	defineOptions({
 		name: 'EmUpload'
@@ -172,9 +172,9 @@
 	 */
 	const handleUploadSuccess = (res: any, file: any, files: any) => {
 		if (res?.code === 0) {
-      let _f = fileData.value
-      file.url = res.data.url || res.data || ''
-      _f?.push(file)
+			let _f = fileData.value
+			file.url = res.data.url || res.data || ''
+			_f?.push(file)
 			emitFileChange(_f.map((e: any) => e.url))
 		} else {
 			ElMessage.error(res?.msg || res?.message || '上传失败')
@@ -222,8 +222,8 @@
 	const handleRemove = (file: any, fileList: any[]) => {
 		if (file) {
 			if (props.autoUpload) {
-        const _fileData = cloneDeep(fileData.value)
-        emitFileChange(_fileData.map((e: any) => e.url))
+				const _fileData = cloneDeep(fileData.value)
+				emitFileChange(_fileData.map((e: any) => e.url))
 			} else {
 				let _index = fileData.value.findIndex((e: any) => e.uid === file.uid)
 				if (_index > -1) {
@@ -251,10 +251,10 @@
 		$request
 			.post(props.url, { url: fetchUrl.value, ...props.paramData }, { isShowLoading: true })
 			.then((d: any) => {
-        fileData.value = [d]
-        emitFileChange(fileData.value.map((e: any) => e.url))
-        ElMessage.success('上传成功')
-        fetchModalVisible.value = false
+				fileData.value = [d]
+				emitFileChange(fileData.value.map((e: any) => e.url || e))
+				ElMessage.success('上传成功')
+				fetchModalVisible.value = false
 			})
 			.catch((e) => {
 				console.warn(e)
@@ -277,8 +277,8 @@
 			<el-button size="small" type="primary" @click="openFetchModal">{{ t('em.button.clickUpload') }}</el-button>
 			<div class="fetch-box">
 				<div class="fetch-img" v-for="(item, index) in fileData" :key="index">
-					<i class="el-icon-close" @click="removeFetchImg($event, index)" />
-					<img :src="item" @click="handlePreview(item)" />
+					<el-icon class="el-icon-close" @click="removeFetchImg($event, index)"><Close /></el-icon>
+					<img :src="item.url || item" @click="handlePreview(item)" />
 				</div>
 			</div>
 		</div>
@@ -309,11 +309,18 @@
 			<el-button size="small" type="primary" v-else>{{ t('em.button.clickUpload') }}</el-button>
 		</el-upload>
 		<!-- 图片预览   -->
-		<el-dialog :visible.sync="dialogVisible" style="z-index: 999" append-to-body>
+		<el-dialog v-model="dialogVisible" style="z-index: 999" append-to-body>
 			<img width="100%" :src="dialogImageUrl" alt="" />
 		</el-dialog>
 		<!--  网络图片抓取  -->
-		<el-dialog title="网络地址" width="520px" :visible.sync="fetchModalVisible" append-to-body :show-close="false">
+		<el-dialog
+			title="网络地址"
+			width="520px"
+			v-model="fetchModalVisible"
+			append-to-body
+			:show-close="false"
+			:close-on-click-modal="false"
+		>
 			<el-input class="wd70" v-model="fetchUrl" :placeholder="t('em.pInputFetchUrl')" />
 			<div style="text-align: center; margin-top: 15px">
 				<el-button type="primary" @click="submitFetch">{{ t('em.button.confirm') }}</el-button>

@@ -164,6 +164,14 @@ const constantRoutes = [
         meta: {
           title: 'emSelectInputEx下拉选择输入组件'
         }
+      },
+      {
+        path: 'emColorGroupEx',
+        component: () => import('./views/example/emColorGroupEx.vue'),
+        name: 'emColorGroupEx',
+        meta: {
+          title: 'emColorGroupEx颜色组'
+        }
       }
     ]
   },

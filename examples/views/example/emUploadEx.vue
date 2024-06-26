@@ -4,7 +4,7 @@
 	defineOptions({
 		name: 'EmUploadEx'
 	})
-	let id = ref<string>('/bg/2023-09/651297382d5f001095be7c90.jpg')
+	let id = ref<string>('http://cdn.cy1973.cn/screen-designer/images/material/2024-06/666963bb096132e67ebe120d.png')
 
 	const onfileChange = (data: any) => {
 		console.log(data)
@@ -17,6 +17,7 @@
 			v-model="id"
 			fileName="files"
 			listType="picture-card"
+      upload-fetch
 			@update:modelValue="onfileChange"
 		/>
 	</div>

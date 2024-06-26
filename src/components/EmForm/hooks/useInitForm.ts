@@ -323,7 +323,7 @@ export default function (
 											(after) => {
 												let tV = cloneDeep(tempKeys.value[root.tempKey])
 												if (root.tempKey) {
-													//当触发changeOption时，将选项清空
+                          // 先清空数据，请求完数据再进行赋值，才会触发watch监听事件
 													tempKeys.value[root.tempKey] = null
 												}
 												if (isValidVal(after)) {
@@ -352,7 +352,15 @@ export default function (
 								}
 							}
 						} else {
-							initOption(root.optionUrl, root)
+              // 由于element-plus的modal弹窗初始化是空，需求open后才会加载里面的组件，导致会出现先update后加载下拉列表的情况
+              nextTick(() => {
+                let tV = cloneDeep(tempKeys.value[root.tempKey])
+                if (root.tempKey) {
+                  // 先清空数据，请求完数据再进行赋值，才会触发watch监听事件
+                  tempKeys.value[root.tempKey] = null
+                }
+                initOption(root.optionUrl, root, tV)
+              })
 						}
 					} else if (myTypeof(root.borrowOption) === 'String') {
 						/*借用待选项（只能使用静态数据）*/

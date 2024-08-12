@@ -11,17 +11,15 @@
   ref="tableSelectRef"
   v-model="deptId"
   :searchForm = "searchForm"
-:
-columns = "columns"
-multiple
-url = "/bt-table-page"
-@on
--data - change = "onDataChange"
-@changeRow
-= "changeRow" / >
+  :columns = "columns"
+  multiple
+  url = "/bt-table-page"
+  @on-data-change = "onDataChange"
+  @changeRow="changeRow" 
+  />
   
   data()
-{
+  {
   return {
     deptId: [],
     searchForm: [
@@ -54,8 +52,7 @@ methods: {
   onDataChange(d)
   {
     console.log(d)
-  }
-,
+  },
   changeRow(d)
   {
     console.log(d)

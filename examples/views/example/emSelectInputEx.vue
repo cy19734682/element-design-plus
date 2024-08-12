@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 	import { EmSelectInput } from '../../../src'
+	import { useStore } from '@/store/main'
 
 	defineOptions({
 		name: 'emSelectInputEx'
 	})
+
+	const store = useStore()
 	let value = ref<Record<string, any>>({})
 	let data = ref<any[]>([
 		{
@@ -37,7 +40,7 @@
 		<div class="form-box">
 			<em-select-input
 				v-model="value"
-				url="/brand"
+				:url="store.serverUrl + '/brand'"
 				optionVal="label"
 				optionLabel="name"
 				@on-val-change="onValChange"

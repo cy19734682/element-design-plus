@@ -1,26 +1,26 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": [
-    "env.d.ts",
-    "auto-imports.d.ts",
-    "./src/**/*",
-    "./src/**/*.ts",
-    "./src/**/*.json",
-    "./examples/**/*.json",
-    "./examples/**/*"
-  ],
-  "exclude": [],
-  "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "composite": true,
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "paths": {
-      "@/*": [
-        "./examples/*"
-      ]
-    }
-  }
+	"extends": "@vue/tsconfig/tsconfig.dom.json",
+	"include": [
+		"env.d.ts",
+		"auto-imports.d.ts",
+		"./src/**/*",
+		"./src/**/*.ts",
+		"./src/**/*.json",
+		"./examples/**/*.json",
+		"./examples/**/*",
+		"./mock/**/*.ts",
+		"./mock/*.ts"
+	],
+	"exclude": [],
+	"compilerOptions": {
+		"allowJs": true,
+		"baseUrl": ".",
+		"composite": true,
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"paths": {
+			"@/*": ["./examples/*"]
+		}
+	}
 }

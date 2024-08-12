@@ -6,21 +6,18 @@
 
 ````javascript
 <em-form 
- :form - data = "formData"
-:
-formRules = "formRules"
-show - inline - ok - bt
-show - inline - clear - bt
-@on
--submit = "onSubmit"
-@on
--item - change = "onItemChange" > < template
-#sgInput = "{dataGroup}" > < el - input
-v - model = "dataGroup.sgInput" / > < /template>
+  :form-data = "formData"
+  :formRules = "formRules"
+  show-inline-ok-bt
+  show-inline-clear-bt
+  @on-submit="onSubmit"
+  @on-item-change="onItemChange" >
+  <template #sgInput = "{dataGroup}" > 
+    <el-input  v-model="dataGroup.sgInput" /> 
+  </template>
 </em-form>
 
-data()
-{
+data(){
   return {
     formData: [
       {
@@ -206,8 +203,7 @@ methods: {
   onItemChange(data)
   {
     console.log(data)
-  }
-,
+  },
   onSubmit(data)
   {
     console.log(data)
@@ -348,207 +344,43 @@ methods: {
 |     disabled      |       是否禁用       |   Boolean    |    —    |               false               |
 
 #### select 下拉选择器
-
-<table>
-	<tr>
-	    <th>参数</th>
-	    <th>说明</th>
-	    <th>类型</th>  
-	    <th>可选值</th>  
-	    <th>默认值</th>  
-	</tr>
-	<tr>
-	    <td>filterable</td>
-	    <td>是否可搜索</td>
-	    <td>Boolean</td>
-	    <td>—</td>
-	    <td>true</td>
-	</tr>
-	<tr>
-	    <td>asyncOption</td>
-	    <td>是否远程拉取数据</td>
-	    <td>Boolean</td>
-	    <td>—</td>
-	    <td>false</td>
-	</tr>
-	<tr>
-	    <td>optionUrl</td>
-	    <td>远程拉取数据接口地址</td>
-	    <td>String</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr>
-	    <td>changeOption</td>
-	    <td>需要根据其它选项的值作为条件来查询</td>
-	    <td>Object/Array</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr>
-	    <td>multiple</td>
-	    <td>是否多选</td>
-	    <td>Boolean</td>
-	    <td>—</td>
-	    <td>false</td>
-	</tr>
-	<tr>
-	    <td>placeholder</td>
-	    <td>占位符</td>
-	    <td>String</td>
-	    <td>—</td>
-	    <td>请选择</td>
-	</tr>
-	<tr >
-	    <td rowspan="4">options</td>
-	    <td>label</td>
-	    <td>子选项标签名称</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr >
-	    <td>val</td>
-	    <td>子选项值</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr >
-	    <td>disabled</td>
-	    <td>是否禁用该子选项</td>
-	    <td>Boolean</td>
-	    <td>false</td>
-	</tr>
-</table>
+| 参数           | 说明                | 类型           | 可选值   | 默认值   |
+|--------------|-------------------|--------------|-------|-------|
+| filterable   | 是否可搜索             | Boolean      | —     | true  |
+| asyncOption  | 是否远程拉取数据          | Boolean      | —     | false |
+| optionUrl    | 远程拉取数据接口地址        | String       | —     | —     |
+| changeOption | 需要根据其它选项的值作为条件来查询 | Object/Array | —     | —     |
+| multiple     | 是否多选              | Boolean      | —     | false |
+| placeholder  | 占位符               | String       | —     | 请选择   |
+| options      | label             | 子选项标签名称      | —     | —     |
+| val          | 子选项值              | —            | —     |
+| disabled     | 是否禁用该子选项          | Boolean      | false |
 
 #### radio 单选组
 
-<table>
-	<tr>
-	    <th>参数</th>
-	    <th>说明</th>
-	    <th>类型</th>  
-	    <th>可选值</th>  
-	    <th>默认值</th>  
-	</tr>
-	<tr>
-	    <td>size</td>
-	    <td>单选框组尺寸</td>
-	    <td>String</td>
-	    <td>default/small/large</td>
-	    <td>default</td>
-	</tr>
-	<tr>
-	    <td>textColor</td>
-	    <td>按钮形式的 Radio 激活时的文本颜色</td>
-	    <td>string</td>
-	    <td>—</td>
-	    <td>#ffffff</td>
-	</tr>
-	<tr>
-	    <td>fill</td>
-	    <td>按钮形式的 Radio 激活时的填充色和边框色</td>
-	    <td>String</td>
-	    <td>—</td>
-	    <td>#409EFF</td>
-	</tr>
-	<tr>
-	    <td>radioType</td>
-	    <td>radio展示类型</td>
-	    <td>String</td>
-	    <td>button/radio</td>
-	    <td>radio</td>
-	</tr>
-	<tr >
-	    <td rowspan="4">options</td>
-	    <td>label</td>
-	    <td>radio标签名称</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr >
-	    <td>val</td>
-	    <td>radio的值</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr >
-	    <td>itemBorder</td>
-	    <td>Radio是否展示边框</td>
-	    <td>Boolean</td>
-	    <td>false</td>
-	</tr>
-	<tr >
-	    <td>disabled</td>
-	    <td>是否禁用该子选项</td>
-	    <td>Boolean</td>
-	    <td>false</td>
-	</tr>
-</table>
+| 参数         | 说明                      | 类型        | 可选值                 | 默认值     |
+|------------|-------------------------|-----------|---------------------|---------|
+| size       | 单选框组尺寸                  | String    | default/small/large | default |
+| textColor  | 按钮形式的 Radio 激活时的文本颜色    | string    | —                   | #ffffff |
+| fill       | 按钮形式的 Radio 激活时的填充色和边框色 | String    | —                   | #409EFF |
+| radioType  | radio展示类型               | String    | button/radio        | radio   |
+| options    | label                   | radio标签名称 | —                   | —       |
+| val        | radio的值                 | —         | —                   |
+| itemBorder | Radio是否展示边框             | Boolean   | false               |
+| disabled   | 是否禁用该子选项                | Boolean   | false               |
 
 #### checkbox 多选组
 
-<table>
-	<tr>
-	    <th>参数</th>
-	    <th>说明</th>
-	    <th>类型</th>  
-	    <th>可选值</th>  
-	    <th>默认值</th>  
-	</tr>
-	<tr>
-	    <td>size</td>
-	    <td>多选框组尺寸</td>
-	    <td>String</td>
-	    <td>default/small/large</td>
-	    <td>default</td>
-	</tr>
-	<tr>
-	    <td>textColor</td>
-	    <td>按钮形式的 Checkbox 激活时的文本颜色</td>
-	    <td>string</td>
-	    <td>—</td>
-	    <td>#ffffff</td>
-	</tr>
-	<tr>
-	    <td>fill</td>
-	    <td>按钮形式的 Checkbox 激活时的填充色和边框色</td>
-	    <td>String</td>
-	    <td>—</td>
-	    <td>#409EFF</td>
-	</tr>
-	<tr>
-	    <td>checkboxType</td>
-	    <td>Checkbox展示类型</td>
-	    <td>String</td>
-	    <td>button/checkbox</td>
-	    <td>checkbox</td>
-	</tr>
-	<tr >
-	    <td rowspan="4">options</td>
-	    <td>label</td>
-	    <td>checkbox标签名称</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr >
-	    <td>val</td>
-	    <td>checkbox的值</td>
-	    <td>—</td>
-	    <td>—</td>
-	</tr>
-	<tr >
-	    <td>itemBorder</td>
-	    <td>Checkbox是否展示边框</td>
-	    <td>Boolean</td>
-	    <td>false</td>
-	</tr>
-	<tr >
-	    <td>disabled</td>
-	    <td>是否禁用该子选项</td>
-	    <td>Boolean</td>
-	    <td>false</td>
-	</tr>
-</table>
+| 参数           | 说明                         | 类型           | 可选值                 | 默认值      |
+|--------------|----------------------------|--------------|---------------------|----------|
+| size         | 多选框组尺寸                     | String       | default/small/large | default  |
+| textColor    | 按钮形式的 Checkbox 激活时的文本颜色    | string       | —                   | #ffffff  |
+| fill         | 按钮形式的 Checkbox 激活时的填充色和边框色 | String       | —                   | #409EFF  |
+| checkboxType | Checkbox展示类型               | String       | button/checkbox     | checkbox |
+| options      | label                      | checkbox标签名称 | —                   | —        |
+| val          | checkbox的值                 | —            | —                   |
+| itemBorder   | Checkbox是否展示边框             | Boolean      | false               |
+| disabled     | 是否禁用该子选项                   | Boolean      | false               |
 
 #### date 日期组件
 

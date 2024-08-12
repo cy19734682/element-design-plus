@@ -10,17 +10,17 @@
 <em-upload
   v-model="url"
   multiple
-  :length = "1"
-  :format = "['jpg','xlsx']"
-  listType = "picture-card"
-  @on-file - change = "onfileChange" / >
+  :length="1"
+  :format="['jpg','xlsx']"
+  listType="picture-card"
+  @on-file-change="onfileChange" />
 
   data()
-{
-  return {
-    url: '',
+  {
+    return {
+      url: '',
+    }
   }
-}
 
 methods: {
   onfileChange(data)
@@ -36,14 +36,13 @@ methods: {
 <em-upload
   v-model="files"
   :autoUpload = 'false'
-fileName = "files"
-multiple
+  fileName = "files"
+  multiple
   :length = "5"
-:
-format = "['jpg','xlsx']"
-listType = "picture-card"
-@on
--file - change = "onfileChange" / >
+  :format="['jpg','xlsx']"
+  listType="picture-card"
+  @on-file-change = "onfileChange" 
+  />
 
   data()
 {

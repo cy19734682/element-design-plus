@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 	import { EmSearchForm, EmTablePage, EmFormModal } from '../../../src'
-	import { ElMessage, ElMessageBox, ElPopover, ElImage } from 'element-plus'
+	import { ElMessage, ElMessageBox, ElImage } from 'element-plus'
 	import { cloneDeep } from 'lodash-es'
 	import { exportTableToExcel, exportJsonToExcel, exportTxtToZip, $request, isValidVal } from '../../../src'
+	import { useStore } from '@/store/main'
 
 	defineOptions({
 		name: 'emRowPageEx'
 	})
 
+	const store = useStore()
 	let activeRow = ref<Record<string, any>>({})
 	let searchData = ref<Record<string, any>>({})
 	let selectIds = ref<any[]>([])
@@ -51,29 +53,13 @@
 			key: 'id',
 			label: 'ID',
 			render: (params: any) => {
-				return h(
-					ElPopover,
-					{
-						trigger: 'hover'
-					},
-					{
-						default: () =>
-							h(ElImage, {
-								fit: 'fill',
-								src: window?._global?.serverImg + params.row.file_path
-							}),
-						reference: () =>
-							h(ElImage, {
-								fit: 'fill',
-								style: {
-									width: '100%',
-									height: '200px',
-									margin: '0 auto'
-								},
-								src: window?._global?.serverImg + params.row.file_path
-							})
-					}
-				)
+				return h(ElImage, {
+          style: {
+            width: '100%',
+            height: '200px',
+          },
+          src: window?._global?.serverImg + params.row.imgPath
+        })
 			}
 		},
 		{
@@ -174,10 +160,10 @@
 		ElMessageBox.confirm('是否确认删除', '提示')
 			.then(() => {
 				$request
-					.delete('/bt-table', { ids })
+					.delete(store.serverUrl + '/bt-table', { ids })
 					.then(() => {
-            ElMessage.success('删除成功')
-            tableRef.value.getTableData()
+						ElMessage.success('删除成功')
+						tableRef.value.getTableData()
 					})
 					.catch()
 			})
@@ -203,13 +189,13 @@
 			method = 'put'
 			data['id'] = activeRow.value.id
 		}
-		$request[method]('/bt-table', data, { isShowLoading: true })
+		$request[method](store.serverUrl + '/bt-table', data, { isShowLoading: true })
 			.then(() => {
-        ElMessage.success(method === 'post' ? '新增成功' : '编辑成功')
-        tableRef.value.getTableData()
-        formModalRef.value.changeLoading(false)
-        formModalRef.value.close()
-        onClose()
+				ElMessage.success(method === 'post' ? '新增成功' : '编辑成功')
+				tableRef.value.getTableData()
+				formModalRef.value.changeLoading(false)
+				formModalRef.value.close()
+				onClose()
 			})
 			.catch((e) => {
 				formModalRef.value.changeLoading(false)
@@ -269,7 +255,7 @@
 				id="tablePage"
 				ref="tableRef"
 				radio
-				url="/bt-table-page"
+				:url="store.serverUrl + '/bt-table-page'"
 				:isTable="false"
 				:row-gutter="15"
 				:columns="columns"
@@ -297,6 +283,6 @@
 		width: 100%;
 		height: 100%;
 		position: relative;
-    overflow: auto;
+		overflow: auto;
 	}
 </style>

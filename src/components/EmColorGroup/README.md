@@ -5,14 +5,14 @@
 ### 基本使用
 
 ````javascript
-<em-color-group v-model="color"/>
+  <em-color-group v-model="color"/>
 
-data()
-{
-  return {
-    color: ['#fff','#aaa']
+  data()
+  {
+    return {
+      color: ['#fff','#aaa']
+    }
   }
-}
 
 ````
 

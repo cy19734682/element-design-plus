@@ -7,16 +7,13 @@
 静态数据
 
 ````javascript
-<em-editor
-  v-model="value"
-  @on-val-change="onValChange"
-  />
+<em-editor v-model="value"   @on-val-change="onValChange" />
 
   data() {
-      return {
-        value: '',
-      }
-}
+    return {
+      value: '',
+    }
+  }
 ````
 
 ### 组件属性

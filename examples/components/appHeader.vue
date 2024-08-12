@@ -1,19 +1,15 @@
 <script setup lang="ts">
 	import { useStore } from '@/store/main'
-	import setLange from '../components/setLange.vue'
+	import setLange from './setLange.vue'
+	import setServer from './setServer.vue'
 	import { useI18n } from 'vue-i18n'
 
 	const store = useStore()
 	const router = useRouter()
 	const { t } = useI18n()
 
-	const curPath = computed(() => router.currentRoute.value.fullPath)
-
 	const login = () => {
 		router.push('/login')
-	}
-	const back = () => {
-		router.go(-1)
 	}
 	const logout = () => {
 		store.logout()
@@ -21,10 +17,12 @@
 </script>
 <template>
 	<div class="app-header">
-		<div class="app-head-row">
-			<div class="back">
-				<el-button @click="back" size="small" icon="el-icon-arrow-left" v-if="curPath !== '/index'">返回</el-button>
-			</div>
+		<div class="left">
+			<span class="text">Element-Design-Plus</span>
+		</div>
+		<div class="right">
+			<setServer class="line-item" />
+			<setLange class="line-item" />
 			<div class="user-info">
 				<div v-if="store.isLogin">
 					{{ store.nickname }}
@@ -32,16 +30,37 @@
 				</div>
 				<el-button v-else type="primary" @click="login"> {{ t('login.logIn') }}</el-button>
 			</div>
-			<setLange />
 		</div>
 	</div>
 </template>
 <style lang="scss" scoped>
 	.app-header {
-		.app-head-row {
+		padding: 10px 20px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+    border-bottom: 1px solid #eee;
+    .left{
+      color: #2c3e50;
+      font-size: 20px;
+      font-weight: bold;
+    }
+		.right {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			.line-item {
+				margin-right: 40px;
+				position: relative;
+				&::after {
+					content: '';
+					height: 20px;
+					border-left: 1px #999 solid;
+					position: absolute;
+					top: 0;
+					right: -20px;
+				}
+			}
 		}
 	}
 </style>

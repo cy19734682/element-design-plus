@@ -7,12 +7,11 @@
 ````javascript
 <em-form-group
   ref="formGroupRef"
-  :form - data = "formData"
-:
-form - rules = "formRules"
-btnLoading
-@on
--submit = "onSubmit" / >
+  :form-data="formData"
+  :form-rules="formRules"
+  btnLoading
+  @on-submit="onSubmit" 
+  />
   
   data()
 {

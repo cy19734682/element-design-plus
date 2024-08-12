@@ -5,21 +5,18 @@
 ### 基本使用
 
 ````javascript
-<el-button type="primary" @click = "newData" > 新增 < /el-button>
-<el-button type="warning" @click = "editData" > 编辑 < /el-button>
+<el-button type="primary" @click="newData" > 新增 < /el-button>
+<el-button type="warning" @click="editData" > 编辑 < /el-button>
 <em-form-modal
   ref="formModalRef"
   title="编辑数据"
-  :form - data = "formData"
-:
-form - rules = "formRules"
-btnLoading
-@on
--item - change = "onItemChange"
-@on
--submit = "onSubmit"
-@on
--close = "onClose" / >
+  :form-data="formData"
+  :form-rules="formRules"
+  btnLoading
+  @on-item-change="onItemChange"
+  @on-submit="onSubmit"
+  @on-close="onClose"
+  />
   
   data()
 {

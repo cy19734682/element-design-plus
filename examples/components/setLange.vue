@@ -14,17 +14,11 @@
     }
   })
 </script>
-<style lang="scss" scoped>
-  .lang{
-    padding: 20px 0;
-    text-align: right;
-  }
-</style>
 <template>
   <div class="lang">
     <el-radio-group v-model="language">
-      <el-radio value="zh-cn">中文</el-radio>
-      <el-radio value="en">English</el-radio>
+      <el-radio size="small" value="zh-cn">中文</el-radio>
+      <el-radio size="small" value="en">English</el-radio>
     </el-radio-group>
   </div>
 </template>

@@ -6,8 +6,7 @@
 
 ````javascript
 
-<
-EmUploadExcel :onSuccess = "onSuccess" / >
+<EmUploadExcel :onSuccess = "onSuccess" / >
 
 ````
 

@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 	import { EmTableSelect } from '../../../src'
+	import { useStore } from '@/store/main'
 
 	defineOptions({
 		name: 'emTableSelectEx'
 	})
+
+	const store = useStore()
 	let deptId = ref<any[]>([82])
 	const searchForm = ref<any[]>([
 		{
@@ -52,7 +55,7 @@
 				:searchForm="searchForm"
 				:columns="columns"
 				multiple
-				url="/bt-table-page"
+				:url="store.serverUrl + '/bt-table-page'"
 				@on-data-change="onDataChange"
 				@changeRow="changeRow"
 			/>

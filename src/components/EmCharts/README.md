@@ -7,16 +7,17 @@
 ````javascript
 <em-charts 
     :config = "orderMonthChart"
-width = "100%"
-height = "350px"
-id = "statusChart" / >
+    width = "100%"
+    height = "350px"
+    id = "statusChart" 
+  />
   
   data()
-{
-  return {
-    orderMonthData: [],
-  }
-}
+    {
+      return {
+        orderMonthData: [],
+      }
+    }
 
 computed:{
   orderMonthChart()

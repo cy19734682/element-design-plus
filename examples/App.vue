@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <script>
@@ -9,9 +7,3 @@
     name: 'App'
   }
 </script>
-
-<style>
-  body .el-table th.gutter {
-    display: table-cell !important;
-  }
-</style>

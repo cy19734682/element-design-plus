@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 	import { EmFormModal } from '../../../src'
+  import { useStore } from '@/store/main'
 
 	defineOptions({
 		name: 'EmFormModalEx'
 	})
 
+  const store = useStore()
 	const formData = ref<any[]>([
 		{
 			type: 'input',
@@ -49,7 +51,7 @@
       label: '品牌',
       key: 'brandId',
       asyncOption: true,
-      optionUrl: '/brand',
+      optionUrl: store.serverUrl + '/brand',
       optionLabel: 'name',
       optionVal: 'id'
     },
@@ -66,7 +68,7 @@
 			label: '远程数据',
 			key: 'devId',
 			asyncOption: true,
-			optionUrl: '/bt-table',
+			optionUrl: store.serverUrl + '/bt-table',
 			optionLabel: 'name',
 			optionVal: 'id',
 			collectLabel: {
@@ -84,10 +86,6 @@
 					notRequired: true
 				}
 			],
-      collectLabel: {
-        valKey: 'mimeType',
-        key: 'mineDev'
-      },
 			localOption: [
 				{
 					id: 998,
@@ -106,7 +104,7 @@
 			label: '图片Id',
 			key: 'imgId',
 			asyncOption: true,
-			optionUrl: '/bt-table?imgId=1',
+			optionUrl: store.serverUrl + '/bt-table?imgId=1',
 			optionLabel: 'name',
 			optionVal: 'id',
 			collectLabel: {

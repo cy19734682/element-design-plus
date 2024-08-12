@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 	import { EmForm } from '../../../src'
+	import { useStore } from '@/store/main'
 
 	defineOptions({
 		name: 'EmFormEx'
 	})
+
+	const store = useStore()
 	const formData = ref<any[]>([
 		{
 			type: 'txt',
@@ -132,8 +135,8 @@
 			label: '图标',
 			key: 'icon',
 			defaultVal: 'lock',
-      info: '选择图标选标选择图标选择图标选择图标选择图标',
-      infoColor: '#333'
+			info: '选择图标选标选择图标选择图标选择图标选择图标',
+			infoColor: '#333'
 		},
 		{
 			type: 'switch',
@@ -159,7 +162,7 @@
 		{
 			type: 'cascader',
 			label: '部门',
-			url: '/dept',
+			url: store.serverUrl + '/dept',
 			key: 'deptId',
 			key2: 'deptName'
 		},
@@ -168,7 +171,7 @@
 			label: '品牌',
 			key: 'brandId',
 			asyncOption: true,
-			optionUrl: '/brand',
+			optionUrl: store.serverUrl + '/brand',
 			optionLabel: 'name',
 			optionVal: 'id'
 		},
@@ -177,7 +180,7 @@
 			label: '文档类型',
 			key: 'mimeType',
 			multiple: true,
-			url: '/bt-table-page',
+			url: store.serverUrl + '/bt-table-page',
 			searchForm: [
 				{
 					type: 'input',

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import appMain from './components/appMain.vue'
 
 /**
@@ -9,12 +9,7 @@ import appMain from './components/appMain.vue'
 const constantRoutes = [
   {
     path: '/',
-    redirect: '/index'
-  },
-  {
-    path: '/index',
-    component: () => import('./views/index.vue'),
-    name: 'index',
+    redirect: '/upload/emUploadExcel'
   },
   {
     path: '/login',
@@ -25,161 +20,211 @@ const constantRoutes = [
     }
   },
   {
-    path: '/home',
+    path: '/upload',
     component: appMain,
-    name: 'home',
+    name: 'upload',
+    meta: {
+      title: '上传组件'
+    },
     children: [
       {
-        path: 'uploadExcelEx',
+        path: 'emUploadExcel',
         component: () => import('./views/example/uploadExcelEx.vue'),
-        name: 'uploadExcelEx',
+        name: 'EmUploadExcel',
         meta: {
-          title: 'excel上传解析'
+          title: 'excel上传解析',
+          mdName: 'EmUploadExcel'
         },
       },
       {
-        path: 'emFormEx',
-        component: () => import('./views/example/emFormEx.vue'),
-        name: 'emFormEx',
+        path: 'emUpload',
+        component: () => import('./views/example/emUploadEx.vue'),
+        name: 'EmUpload',
         meta: {
-          title: 'emForm表单'
+          title: '文件上传',
+          mdName: 'EmUpload'
+        }
+      },
+    ]
+  },
+  {
+    path: '/form',
+    component: appMain,
+    name: 'form',
+    meta: {
+      title: '表单组件'
+    },
+    children: [
+      {
+        path: 'emForm',
+        component: () => import('./views/example/emFormEx.vue'),
+        name: 'EmForm',
+        meta: {
+          title: '综合表单',
+          mdName: 'EmForm'
         },
       },
       {
         path: 'emStaticForm',
         component: () => import('./views/example/emStaticFormEx.vue'),
-        name: 'emStaticForm',
+        name: 'EmStaticForm',
         meta: {
-          title: 'emStaticForm表单'
+          title: '静态表单',
+          mdName: 'EmStaticForm'
         },
       },
       {
-        path: 'emSearchFormEx',
+        path: 'emSearchForm',
         component: () => import('./views/example/emSearchFormEx.vue'),
-        name: 'emSearchFormEx',
+        name: 'EmSearchForm',
         meta: {
-          title: 'SearchForm表单'
+          title: '搜索表单',
+          mdName: 'EmSearchForm'
         },
       },
       {
-        path: 'emFormGroupEx',
+        path: 'emFormGroup',
         component: () => import('./views/example/emFormGroupEx.vue'),
-        name: 'emFormGroupEx',
+        name: 'EmFormGroup',
         meta: {
-          title: 'formGroup表单'
+          title: '分组表单',
+          mdName: 'EmFormGroup'
         },
       },
       {
-        path: 'emFormModalEx',
+        path: 'emFormModal',
         component: () => import('./views/example/emFormModalEx.vue'),
-        name: 'emFormModalEx',
+        name: 'EmFormModal',
         meta: {
-          title: 'formModal表单'
+          title: '弹窗表单',
+          mdName: 'EmFormModal'
         }
       },
+    ]
+  },
+  {
+    path: '/table',
+    component: appMain,
+    name: 'table',
+    meta: {
+      title: '分页表格组件'
+    },
+    children: [
       {
-        path: 'emTablePageEx',
+        path: 'emTablePage',
         component: () => import('./views/example/emTablePageEx.vue'),
-        name: 'emTablePageEx',
+        name: 'EmTablePage',
         meta: {
-          title: 'emTablePageEx列表'
+          title: '表格分页',
+          mdName: 'EmTablePage'
         }
       },
       {
-        path: 'emRowPageEx',
+        path: 'emRowPage',
         component: () => import('./views/example/emRowPageEx.vue'),
-        name: 'emRowPageEx',
+        name: 'emRowPage',
         meta: {
-          title: 'emRowPageEx列表'
+          title: '栅栏分页',
+          mdName: 'EmTablePage'
         }
       },
+    ]
+  },
+  {
+    path: '/home',
+    component: appMain,
+    name: 'home',
+    meta: {
+      title: '其它组件'
+    },
+    children: [
       {
-        path: 'emUploadEx',
-        component: () => import('./views/example/emUploadEx.vue'),
-        name: 'emUploadEx',
-        meta: {
-          title: 'emUploadEx文件上传'
-        }
-      },
-      {
-        path: 'emCascaderAreaEx',
+        path: 'emCascaderArea',
         component: () => import('./views/example/emCascaderAreaEx.vue'),
-        name: 'emCascaderAreaEx',
+        name: 'EmCascaderArea',
         meta: {
-          title: 'emCascaderAreaEx省市区选择'
+          title: '省市区选择',
+          mdName: 'EmCascaderArea'
         }
       },
       {
-        path: 'emCascaderEx',
+        path: 'emCascader',
         component: () => import('./views/example/emCascaderEx.vue'),
-        name: 'emCascaderEx',
+        name: 'EmCascader',
         meta: {
-          title: 'emCascaderEx自定义级联'
+          title: '自定义级联',
+          mdName: 'EmCascader'
         }
       },
       {
-        path: 'emMapEx',
+        path: 'emMap',
         component: () => import('./views/example/emMapEx.vue'),
-        name: 'emMapEx',
+        name: 'EmMap',
         meta: {
-          title: 'emMapEx地图组件'
+          title: '地图组件',
+          mdName: 'EmBaiduMap'
         }
       },
       {
-        path: 'emChartsEx',
+        path: 'emCharts',
         component: () => import('./views/example/emChartsEx.vue'),
-        name: 'emChartsEx',
+        name: 'EmCharts',
         meta: {
-          title: 'emChartsEx图表组件'
+          title: '图表',
+          mdName: 'EmCharts'
         }
       },
       {
-        path: 'emIconEx',
+        path: 'emIcon',
         component: () => import('./views/example/emIconEx.vue'),
-        name: 'emIconEx',
+        name: 'EmIcon',
         meta: {
-          title: 'emIconEx图标组件'
+          title: '图标',
+          mdName: 'EmIcons'
         }
       },
       {
-        path: 'emIconSelectEx',
+        path: 'emIconSelect',
         component: () => import('./views/example/emIconSelectEx.vue'),
-        name: 'emIconSelectEx',
+        name: 'EmIconSelect',
         meta: {
-          title: 'emIconEx图标选择组件'
+          title: '图标选择',
+          mdName: 'EmIconSelect'
         }
       },
       {
-        path: 'emTableSelectEx',
+        path: 'emTableSelect',
         component: () => import('./views/example/emTableSelectEx.vue'),
-        name: 'emTableSelectEx',
+        name: 'EmTableSelect',
         meta: {
-          title: 'emTableSelectEx表格选择组件'
+          title: '表格选择',
+          mdName: 'EmTableSelect'
         }
       },
       {
-        path: 'emSelectInputEx',
+        path: 'emSelectInput',
         component: () => import('./views/example/emSelectInputEx.vue'),
-        name: 'emSelectInputEx',
+        name: 'EmSelectInput',
         meta: {
-          title: 'emSelectInputEx下拉选择输入组件'
+          title: '下拉选择输入',
+          mdName: 'EmSelectInput'
         }
       },
       {
-        path: 'emColorGroupEx',
+        path: 'emColorGroup',
         component: () => import('./views/example/emColorGroupEx.vue'),
-        name: 'emColorGroupEx',
+        name: 'EmColorGroup',
         meta: {
-          title: 'emColorGroupEx颜色组'
+          title: '颜色组',
+          mdName: 'EmColorGroup'
         }
       }
     ]
   },
 ]
 
-const bl = import.meta.env.BASE_URL
 const router = createRouter({
-  history: createWebHistory(bl),
+  history: createWebHashHistory(),
   linkActiveClass: 'active',
   routes: constantRoutes
 })

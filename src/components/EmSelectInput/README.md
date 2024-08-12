@@ -10,11 +10,12 @@
 <em-select-input
   v-model="value"
   :data = "data"
-@on
--val - change = "onValChange"
-@on
--change = "onChange" / > data()
-{
+  @on-val-change="onValChange"
+  @on-change="onChange" 
+  /> 
+  
+  data(){
+    
   return {
     value: {},
     data: [
@@ -45,9 +46,9 @@
   url="/brand"
   optionVal="label"
   optionLabel="name"
-  @on - val - change = "onValChange"
-@on
--change = "onChange" / >
+  @on-val-change="onValChange"
+  @on-change="onChange" 
+  />
   
   data()
 {

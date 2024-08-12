@@ -3,11 +3,13 @@
 	import { ElMessage, ElMessageBox, ElButton } from 'element-plus'
 	import { cloneDeep } from 'lodash-es'
 	import { exportTableToExcel, exportJsonToExcel, exportTxtToZip, isValidVal, $request } from '../../../src'
+	import { useStore } from '@/store/main'
 
 	defineOptions({
 		name: 'emTablePageEx'
 	})
 
+	const store = useStore()
 	const searchFormRef = ref<any>()
 	const tableRef = ref<any>()
 	const formModalRef = ref<any>()
@@ -193,10 +195,10 @@
 		ElMessageBox.confirm('是否确认删除', '提示')
 			.then(() => {
 				$request
-					.delete('/bt-table', { ids })
+					.delete(store.serverUrl + '/bt-table', { ids })
 					.then(() => {
-            ElMessage.success('删除成功')
-            tableRef.value.getTableData()
+						ElMessage.success('删除成功')
+						tableRef.value.getTableData()
 					})
 					.catch()
 			})
@@ -222,13 +224,13 @@
 			method = 'put'
 			data['id'] = activeRow.value.id
 		}
-		$request[method]('/bt-table', data, { isShowLoading: true })
+		$request[method](store.serverUrl + '/bt-table', data, { isShowLoading: true })
 			.then(() => {
-        ElMessage.success(method === 'post' ? '新增成功' : '编辑成功')
-        tableRef.value.getTableData()
-        formModalRef.value.changeLoading(false)
-        formModalRef.value.close()
-        onClose()
+				ElMessage.success(method === 'post' ? '新增成功' : '编辑成功')
+				tableRef.value.getTableData()
+				formModalRef.value.changeLoading(false)
+				formModalRef.value.close()
+				onClose()
 			})
 			.catch(() => {
 				formModalRef.value.changeLoading(false)
@@ -287,7 +289,7 @@
 				id="tablePage"
 				ref="tableRef"
 				selection
-				url="/bt-table-page"
+				:url="store.serverUrl + '/bt-table-page'"
 				:columns="columns"
 				:searchData="searchData"
 				orderKey=""

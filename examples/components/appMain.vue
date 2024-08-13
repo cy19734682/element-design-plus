@@ -3,7 +3,7 @@
 	import appSideMenu from '../components/appSideMenu.vue'
 	import appMd from '../components/appMd.vue'
   import { useStore } from '@/store/main'
-  import zhCn from 'element-plus/es/locale/lang/zh-CN' // 中文包
+  import zhCn from 'element-plus/es/locale/lang/zh-cn' // 中文包
   import en from 'element-plus/es/locale/lang/en'
 
   const store = useStore()

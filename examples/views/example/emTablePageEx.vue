@@ -4,6 +4,8 @@
 	import { cloneDeep } from 'lodash-es'
 	import { exportTableToExcel, exportJsonToExcel, exportTxtToZip, isValidVal, $request } from '../../../src'
 	import { useStore } from '@/store/main'
+	import { code1 } from '@/codeJson/emTablePageEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'emTablePageEx'
@@ -262,42 +264,53 @@
 		let headValue = column.map((e) => e.key)
 		let data = dataT.map((v: any) => headValue.map((j) => v[j]))
 		let filename = '表格数据'
-		exportTxtToZip(header, data, filename, filename)
+		exportTxtToZip(header, data, filename)
 	}
 	/**
 	 * 导出Excel
 	 */
 	const exportTableExcel = () => {
-		exportTableToExcel('tablePage', 1, 4, '表格数据')
+		exportTableToExcel(tableRef.value.$el.parentElement, 1, 4, '表格数据')
 	}
 </script>
 <template>
-	<div class="app-container">
-		<div class="app-search-table">
-			<em-search-form ref="searchFormRef" :form-data="searchFormData" btnLoading @on-search="search">
-				<template #beginBtnGroup>
-					<el-button type="success" @click="addData()"> 新增</el-button>
-					<el-button type="danger" :disabled="!(selectIds && selectIds.length > 0)" @click="delData()">
-						删除
-					</el-button>
-					<el-button type="primary" @click="exportTableExcel()"> TABLE导出</el-button>
-					<el-button type="warning" @click="exportJsonExcel()"> JSON导出</el-button>
-					<el-button type="warning" @click="exportJsonZip()"> zip导出</el-button>
-				</template>
-			</em-search-form>
-			<em-table-page
-				id="tablePage"
-				ref="tableRef"
-				selection
-				:url="store.serverUrl + '/bt-table-page'"
-				:columns="columns"
-				:searchData="searchData"
-				orderKey=""
-				@row-click="rowClick"
-				@selection-change="selectionChange"
-				@on-data-change="onDataChange"
-			/>
-		</div>
+	<div class="container">
+		<el-card>
+			<template #header>
+				<div>分页表格</div>
+			</template>
+			<div class="table-container">
+				<div class="app-search-table">
+					<em-search-form ref="searchFormRef" :form-data="searchFormData" btnLoading @on-search="search">
+						<template #beginBtnGroup>
+							<el-button type="success" @click="addData()"> 新增</el-button>
+							<el-button type="danger" :disabled="!(selectIds && selectIds.length > 0)" @click="delData()">
+								删除
+							</el-button>
+						</template>
+					</em-search-form>
+					<div style="margin: 10px 0">
+						<el-button type="primary" @click="exportTableExcel()"> TABLE导出Excel</el-button>
+						<el-button type="warning" @click="exportJsonExcel()"> JSON导出Excel</el-button>
+						<el-button type="warning" @click="exportJsonZip()"> zip导出</el-button>
+					</div>
+					<em-table-page
+						ref="tableRef"
+						selection
+						:url="store.serverUrl + '/bt-table-page'"
+						:columns="columns"
+						:searchData="searchData"
+						orderKey=""
+						@row-click="rowClick"
+						@selection-change="selectionChange"
+						@on-data-change="onDataChange"
+					/>
+				</div>
+			</div>
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 		<em-form-modal
 			ref="formModalRef"
 			:title="activeRow.id ? '编辑' : '新增'"
@@ -310,10 +323,8 @@
 	</div>
 </template>
 <style scoped lang="scss">
-	.app-container {
-		width: 100%;
-		height: 100%;
+	.table-container {
 		position: relative;
-		overflow: auto;
+		height: 800px;
 	}
 </style>

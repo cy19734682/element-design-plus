@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 	import { EmCharts } from '../../../src'
+	import { code1, code2 } from '@/codeJson/emChartsEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'emChartsEx'
 	})
-	let value = ref<string>('hello')
 	let orderMonthData = ref<any[]>([])
 	let orderStatusData = ref<any[]>([])
 
@@ -254,18 +255,24 @@
 </script>
 <template>
 	<div class="container">
-		<el-row :gutter="40" style="margin-bottom: 20px; max-height: 400px; overflow: hidden">
-			<el-col :span="12" :xs="24">
-				<em-charts :config="orderStatusChart" width="100%" height="350px" id="statusChart" />
-			</el-col>
-			<el-col :span="12" :xs="24">
-				<em-charts :config="orderMonthChart" width="100%" height="350px" id="monthChart" />
-			</el-col>
-		</el-row>
+		<el-card>
+			<template #header>
+				<div>饼图</div>
+			</template>
+			<em-charts :config="orderStatusChart" width="100%" height="350px" id="statusChart" />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
+		<el-divider />
+		<el-card>
+			<template #header>
+				<div>柱状图</div>
+			</template>
+			<em-charts :config="orderMonthChart" width="100%" height="350px" id="monthChart" />
+			<template #footer>
+				<source-code-view :code="code2" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-	}
-</style>

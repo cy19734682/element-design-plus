@@ -2,14 +2,6 @@
 
 上传Excel解析数据
 
-### 基本使用
-
-````javascript
-
-<EmUploadExcel :onSuccess = "onSuccess" / >
-
-````
-
 ### 组件属性
 
 |      参数      |     说明     |    类型    | 可选值 | 默认值 |

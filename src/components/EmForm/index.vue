@@ -30,6 +30,7 @@
 	import EmIconSelect from '../EmIconSelect/index.vue'
 	import EmTableSelect from '../EmTableSelect/index.vue'
 	import EmSelectInput from '../EmSelectInput/index.vue'
+	import EmColorGroup from '../EmColorGroup/index.vue'
 	import { cloneDeep } from 'lodash-es'
 	import { trimObj, myTypeof, isValidVal } from '../../methods'
 	import { useInitForm, useUpdateForm, useClearForm, useLoading } from './hooks'
@@ -670,6 +671,17 @@
 						:color-format="item.colorFormat"
 						:popper-class="item.popperClass"
 						:predefine="item.predefine"
+						@change="itemChange($event, item)"
+					/>
+					<!--颜色组选择-->
+					<em-color-group
+						v-else-if="item.type === 'colorGroup'"
+						v-model="dataGroup[item.key]"
+						:disabled="item.disabled || disabled"
+						:size="item.size"
+						:show-alpha="item.showAlpha"
+						:remain="item.remain"
+						:is-add-del="item.isAddDel"
 						@change="itemChange($event, item)"
 					/>
 					<!--图标选择-->

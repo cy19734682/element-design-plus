@@ -29,7 +29,7 @@ const constantRoutes = [
     children: [
       {
         path: 'emUploadExcel',
-        component: () => import('./views/example/uploadExcelEx.vue'),
+        component: () => import('./views/example/emUploadExcelEx.vue'),
         name: 'EmUploadExcel',
         meta: {
           title: 'excel上传解析',

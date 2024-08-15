@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 	import { EmBaiduMap } from '../../../src'
+	import { code1 } from '@/codeJson/emMapEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'EmMapEx'
@@ -15,13 +17,16 @@
 </script>
 <template>
 	<div class="container">
-		<h2>百度地图</h2>
-		<em-baidu-map v-model="value" @update:modelValue="onValChange" />
-		<div>{{ value }}</div>
+		<el-card>
+			<template #header>
+				<div>百度地图</div>
+			</template>
+			<em-baidu-map v-model="value" @update:modelValue="onValChange" />
+			<div class="json-title">绑定数据:</div>
+			<json-viewer :value="value" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-	}
-</style>

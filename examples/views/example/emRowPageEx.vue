@@ -2,8 +2,10 @@
 	import { EmSearchForm, EmTablePage, EmFormModal } from '../../../src'
 	import { ElMessage, ElMessageBox, ElImage } from 'element-plus'
 	import { cloneDeep } from 'lodash-es'
-	import { exportTableToExcel, exportJsonToExcel, exportTxtToZip, $request, isValidVal } from '../../../src'
+	import { $request, isValidVal } from '../../../src'
 	import { useStore } from '@/store/main'
+	import { code1 } from '@/codeJson/emRowPageEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'emRowPageEx'
@@ -54,12 +56,12 @@
 			label: 'ID',
 			render: (params: any) => {
 				return h(ElImage, {
-          style: {
-            width: '100%',
-            height: '200px',
-          },
-          src: window?._global?.serverImg + params.row.imgPath
-        })
+					style: {
+						width: '100%',
+						height: '200px'
+					},
+					src: window?._global?.serverImg + params.row.imgPath
+				})
 			}
 		},
 		{
@@ -122,9 +124,6 @@
 	 */
 	const search = (data: Record<string, any>) => {
 		searchData.value = cloneDeep(data)
-	}
-	const rowClick = (row: Record<string, any>) => {
-		console.log(row)
 	}
 	/**
 	 * 复选框选择回调
@@ -201,71 +200,43 @@
 				formModalRef.value.changeLoading(false)
 			})
 	}
-	/**
-	 * 导出Excel
-	 */
-	const exportJsonExcel = () => {
-		const dataT = tableRef.value.dataT || []
-		let column = columns.value.filter((e) => e.key)
-		let header = column.map((e) => e.label)
-		let headValue = column.map((e) => e.key)
-		let data = dataT.map((v: Record<string, any>) => headValue.map((j) => v[j]))
-		let filename = '表格数据'
-		exportJsonToExcel({
-			header,
-			data,
-			filename
-		})
-	}
-	/**
-	 * 导出zip
-	 */
-	const exportJsonZip = () => {
-		const dataT = tableRef.value.dataT || []
-		let column = columns.value.filter((e) => e.key)
-		let header = column.map((e) => e.label)
-		let headValue = column.map((e) => e.key)
-		let data = dataT.map((v: Record<string, any>) => headValue.map((j) => v[j]))
-		let filename = '表格数据'
-		exportTxtToZip(header, data, filename, filename)
-	}
-	/**
-	 * 导出Excel
-	 */
-	const exportTableExcel = () => {
-		exportTableToExcel('tablePage', 1, 4, '表格数据')
-	}
 </script>
 
 <template>
-	<div class="app-container">
-		<div class="app-search-table">
-			<em-search-form ref="searchFormRef" :form-data="searchFormData" btnLoading @on-search="search">
-				<template #beginBtnGroup>
-					<el-button type="success" @click="addData()"> 新增</el-button>
-					<el-button type="danger" :disabled="!(selectIds && selectIds.length > 0)" @click="delData()">
-						删除
-					</el-button>
-					<el-button type="primary" @click="exportTableExcel()"> TABLE导出</el-button>
-					<el-button type="warning" @click="exportJsonExcel()"> JSON导出</el-button>
-					<el-button type="warning" @click="exportJsonZip()"> zip导出</el-button>
-				</template>
-			</em-search-form>
-			<em-table-page
-				id="tablePage"
-				ref="tableRef"
-				radio
-				:url="store.serverUrl + '/bt-table-page'"
-				:isTable="false"
-				:row-gutter="15"
-				:columns="columns"
-				:searchData="searchData"
-				orderKey=""
-				@row-click="rowClick"
-				@selection-change="selectionChange"
-				@on-data-change="onDataChange"
-			/>
-		</div>
+	<div class="container">
+		<el-card>
+			<template #header>
+				<div>栅栏表格</div>
+			</template>
+			<div class="table-container">
+				<div class="app-search-table">
+					<em-search-form ref="searchFormRef" :form-data="searchFormData" btnLoading @on-search="search">
+						<template #beginBtnGroup>
+							<el-button type="success" @click="addData()"> 新增</el-button>
+							<el-button type="danger" :disabled="!(selectIds && selectIds.length > 0)" @click="delData()">
+								删除
+							</el-button>
+						</template>
+					</em-search-form>
+					<em-table-page
+						id="tablePage"
+						ref="tableRef"
+						selection
+						:url="store.serverUrl + '/bt-table-page'"
+						:isTable="false"
+						:row-gutter="15"
+						:columns="columns"
+						:searchData="searchData"
+						orderKey=""
+						@row-selection-change="selectionChange"
+						@on-data-change="onDataChange"
+					/>
+				</div>
+			</div>
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 		<em-form-modal
 			ref="formModalRef"
 			:title="activeRow.id ? '编辑' : '新增'"
@@ -274,15 +245,12 @@
 			btnLoading
 			@on-submit="onSubmit"
 			@on-close="onClose"
-		>
-		</em-form-modal>
+		/>
 	</div>
 </template>
 <style scoped lang="scss">
-	.app-container {
-		width: 100%;
-		height: 100%;
+	.table-container {
 		position: relative;
-		overflow: auto;
+		height: 800px;
 	}
 </style>

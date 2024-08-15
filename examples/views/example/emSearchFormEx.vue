@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 	import { EmSearchForm } from '../../../src'
+	import { code1 } from '@/codeJson/emSearchFormEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'EmSearchFormEx'
@@ -92,8 +94,10 @@
 		}
 	])
 
+	const dataJson = ref<Record<string, any>>({})
 	const searchFormRef = ref<any>()
 	const search = (data: Record<string, any>) => {
+		dataJson.value = data
 		console.log(data)
 		setTimeout(() => {
 			searchFormRef.value.changeLoading(false)
@@ -102,17 +106,22 @@
 </script>
 <template>
 	<div class="container">
-		<h2>搜索表单</h2>
-		<em-search-form ref="searchFormRef" :form-data="formData" btnLoading @on-search="search">
-			<template #beginBtnGroup>
-				<el-button type="primary">添加</el-button>
-				<el-button type="danger">删除</el-button>
+		<el-card>
+			<template #header>
+				<div>搜索表单</div>
 			</template>
-		</em-search-form>
+			<em-search-form ref="searchFormRef" :form-data="formData" btnLoading @on-search="search">
+				<template #beginBtnGroup>
+					<el-button type="primary">添加</el-button>
+					<el-button type="danger">删除</el-button>
+				</template>
+			</em-search-form>
+			<el-divider />
+			<div class="json-title">搜索数据:</div>
+			<json-viewer :value="dataJson" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-	}
-</style>

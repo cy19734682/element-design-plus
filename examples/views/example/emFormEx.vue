@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 	import { EmForm } from '../../../src'
 	import { useStore } from '@/store/main'
+	import { code1 } from '@/codeJson/emFormEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'EmFormEx'
@@ -308,20 +310,26 @@
 		}
 	})
 
+	const dataJson = ref<Record<string, any>>({})
+
 	const onItemChange = (data: any) => {
 		console.log(data)
 	}
 	const onSubmit = (data: any) => {
+		dataJson.value = data
 		console.log(data)
 	}
 </script>
 <template>
 	<div class="container">
-		<h2>自定义表单</h2>
-		<div class="form-box">
+		<el-card>
+			<template #header>
+				<div>综合表单</div>
+			</template>
 			<em-form
 				:form-data="formData"
 				:formRules="formRules"
+				labelWidth="100px"
 				show-inline-ok-bt
 				show-inline-clear-bt
 				@on-submit="onSubmit"
@@ -331,17 +339,12 @@
 					<el-input v-model="dataGroup.sgInput" />
 				</template>
 			</em-form>
-		</div>
+			<el-divider />
+			<div class="json-title">提交数据:</div>
+			<json-viewer :value="dataJson" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-		overflow-y: auto;
-		height: 100%;
-
-		.form-box {
-			width: 750px;
-		}
-	}
-</style>

@@ -2,63 +2,6 @@
 
 下拉选择输入框组件
 
-### 基本使用
-
-静态数据
-
-````javascript
-<em-select-input
-  v-model="value"
-  :data = "data"
-  @on-val-change="onValChange"
-  @on-change="onChange" 
-  /> 
-  
-  data(){
-    
-  return {
-    value: {},
-    data: [
-      {
-        val: '1',
-        label: '小学'
-      }, {
-        val: '2',
-        label: '初中'
-      }, {
-        val: '3',
-        label: '高中'
-      }, {
-        val: '4',
-        label: '大学'
-      },
-    ]
-  }
-}
-
-````
-
-远程数据
-
-````javascript
-<em-select-input
-  v-model="value"
-  url="/brand"
-  optionVal="label"
-  optionLabel="name"
-  @on-val-change="onValChange"
-  @on-change="onChange" 
-  />
-  
-  data()
-{
-  return {
-    value: null
-  }
-}
-
-````
-
 ### 组件属性
 
 |        参数         |              说明               |          类型           | 可选值 |  默认值  |
@@ -78,7 +21,7 @@
 
 ### 组件事件
 
-|     事件类型      |       说明        | 回调参数  |
-|:-------------:|:---------------:|:-----:|
-| on-val-change | input输入框的值的变化响应 | 组件绑定值 |
-|   on-change   |    组件的值变化响应     | 组件绑定值 |
+|       事件类型        |     说明     | 回调参数  |
+|:-----------------:|:----------:|:-----:|
+| update:modelValue | 返回绑定值的变化响应 | 绑定的值  |
+|     on-change     |  组件的值变化响应  | 组件绑定值 |

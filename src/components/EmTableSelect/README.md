@@ -4,62 +4,6 @@
 
 - 注意：该组件在表单内使用时，校验规则中trigger要设置为‘blur’，否则会出现清空表单时校验信息未被清空的问题。
 
-### 基本使用
-
-````javascript
-<em-table-select
-  ref="tableSelectRef"
-  v-model="deptId"
-  :searchForm = "searchForm"
-  :columns = "columns"
-  multiple
-  url = "/bt-table-page"
-  @on-data-change = "onDataChange"
-  @changeRow="changeRow" 
-  />
-  
-  data()
-  {
-  return {
-    deptId: [],
-    searchForm: [
-      {
-        type: 'input',
-        key: 'name',
-        label: '商品名称',
-      }
-    ],
-    columns: [
-      {
-        key: "id",
-        label: "ID"
-      }, {
-        key: "name",
-        label: "名称"
-      }, {
-        key: "mimeType",
-        label: "类型"
-      }, {
-        key: "extension",
-        label: "后缀"
-      }
-    ],
-  
-  }
-}
-
-methods: {
-  onDataChange(d)
-  {
-    console.log(d)
-  },
-  changeRow(d)
-  {
-    console.log(d)
-  }
-}
-````
-
 ### 组件属性
 
 |       参数        |          说明          |          类型           |            可选值             |  默认值   |
@@ -83,4 +27,3 @@ methods: {
 |     事件类型      |        说明        |  回调参数  |
 |:-------------:|:----------------:|:------:|
 |  $listeners   | 继承了el-table所有的事件 | 根据事件返回 |
-| on-val-change |    返回绑定值的变化响应    |  绑定的值  |

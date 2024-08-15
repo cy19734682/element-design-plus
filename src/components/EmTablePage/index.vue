@@ -8,7 +8,7 @@
 		name: 'EmTablePage'
 	})
 
-	const emit = defineEmits(['on-data-change'])
+	const emit = defineEmits(['on-data-change', 'row-selection-change'])
 
 	const renderDom = defineComponent({
 		name: 'renderDom',
@@ -158,6 +158,7 @@
 				} else {
 					selected.value.push(row)
 				}
+        emit('row-selection-change', selected.value)
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-	import { EmStaticForm } from '../../../src'
+	import { EmForm, EmStaticForm } from '../../../src'
+	import { code1 } from '@/codeJson/emStaticFormEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'emStaticFormEx'
@@ -171,24 +173,21 @@
 </script>
 <template>
 	<div class="container">
-		<h2>自定义静态表单</h2>
-		<div class="form-box">
+		<el-card>
+			<template #header>
+				<div>静态表单</div>
+			</template>
 			<em-static-form :form-data="formData" v-model="value">
 				<template #sgInput="{ dataGroup }">
 					<el-input v-model="dataGroup.sgInput" />
 				</template>
 			</em-static-form>
-		</div>
+			<el-divider />
+			<div class="json-title">表单数据:</div>
+			<json-viewer :value="value" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-		overflow-y: auto;
-		height: 100%;
-
-		.form-box {
-			width: 750px;
-		}
-	}
-</style>

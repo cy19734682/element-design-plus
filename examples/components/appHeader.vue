@@ -39,9 +39,9 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #dcdfe6;
     .left{
-      color: #2c3e50;
+      color: #409eff;
       font-size: 20px;
       font-weight: bold;
     }

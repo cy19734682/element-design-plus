@@ -116,11 +116,10 @@
 					})
 				]
 			/* find the cell in the first row */
-			let hdr:any = 'UNKNOWN ' + C // <-- replace with your desired default
 			if (cell && cell.t) {
-				hdr = XLSX.utils.format_cell(cell)
+				const hdr = XLSX.utils.format_cell(cell)
+        headers.push(hdr)
 			}
-			headers.push(hdr)
 		}
 		return headers
 	}

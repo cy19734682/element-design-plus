@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 	import { EmTableSelect } from '../../../src'
 	import { useStore } from '@/store/main'
+	import { code1 } from '@/codeJson/emTableSelectEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
+  import {cloneDeep} from "lodash-es"
 
 	defineOptions({
 		name: 'emTableSelectEx'
@@ -33,10 +36,6 @@
 			label: '后缀'
 		}
 	])
-	const props = ref<Record<string, any>>({
-		key: 'id',
-		label: 'name'
-	})
 
 	const onDataChange = (d: any) => {
 		console.log(d)
@@ -47,25 +46,25 @@
 </script>
 <template>
 	<div class="container">
-		<h2>表格选择器</h2>
-		<div class="form-box">
+		<el-card>
+			<template #header>
+				<div>表格选择器</div>
+			</template>
 			<em-table-select
 				ref="tableSelectRef"
 				v-model="deptId"
 				:searchForm="searchForm"
 				:columns="columns"
 				multiple
-				:url="store.serverUrl + '/bt-table-page'"
+				:url="store.serverUrl + '/bt-table-page?size=-1'"
 				@on-data-change="onDataChange"
 				@changeRow="changeRow"
 			/>
-		</div>
+			<div class="json-title">绑定数据:</div>
+			<json-viewer :value="cloneDeep(deptId)" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-		overflow-y: auto;
-		height: 100%;
-	}
-</style>

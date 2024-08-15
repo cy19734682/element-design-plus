@@ -40,6 +40,7 @@
       position: relative;
 			border-left: 1px solid #dcdfe6;
       overflow-y: auto;
+      font-size: 14px;
 		}
 		.markdown-btn {
 			position: absolute;

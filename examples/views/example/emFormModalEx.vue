@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 	import { EmFormModal } from '../../../src'
-  import { useStore } from '@/store/main'
+	import { useStore } from '@/store/main'
+	import { code1 } from '@/codeJson/emFormModalEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
 
 	defineOptions({
 		name: 'EmFormModalEx'
 	})
 
-  const store = useStore()
+	const store = useStore()
 	const formData = ref<any[]>([
 		{
 			type: 'input',
@@ -46,22 +48,22 @@
 				}
 			]
 		},
-    {
-      type: 'select',
-      label: '品牌',
-      key: 'brandId',
-      asyncOption: true,
-      optionUrl: store.serverUrl + '/brand',
-      optionLabel: 'name',
-      optionVal: 'id'
-    },
+		{
+			type: 'select',
+			label: '品牌',
+			key: 'brandId',
+			asyncOption: true,
+			optionUrl: store.serverUrl + '/brand',
+			optionLabel: 'name',
+			optionVal: 'id'
+		},
 		{
 			type: 'select',
 			label: '借用数据',
 			key: 'wbId',
 			borrowOption: 'education',
 			optionLabel: 'name',
-			optionVal: 'id',
+			optionVal: 'id'
 		},
 		{
 			type: 'select',
@@ -99,7 +101,7 @@
 				}
 			]
 		},
-    {
+		{
 			type: 'select',
 			label: '图片Id',
 			key: 'imgId',
@@ -174,42 +176,27 @@
 		},
 		education: {
 			required: true
-		},
-		sex: {
-			required: true
-		},
-		credential: {
-			required: true
 		}
 	})
-	const formModalRef = ref<any>()
 
+	const formModalRef = ref<any>()
+	const title = ref<string>('')
 	const newData = () => {
+		title.value = '新增数据'
 		formModalRef.value.open()
 	}
 	const editData = () => {
+		title.value = '编辑数据'
 		formModalRef.value.open()
 		nextTick(() => {
-			formModalRef.value.updateFormDataT([
-				{
-					index: 0,
-					key: 'label',
-					val: '姓名1'
-				},
-				{
-					index: 1,
-					key: 'label',
-					val: '单价'
-				}
-			])
 			formModalRef.value.updateDataGroup({
 				name: '小王',
 				price: 2690,
 				education: 3,
 				wbId: 2,
 				devId: 81,
-        imgId: 80,
-        brandId: 1,
+				imgId: 80,
+				brandId: 1,
 				date: '2023-05-01',
 				time: '14:29:10',
 				datetime: '2023-01-05 11:12:52',
@@ -220,11 +207,14 @@
 			})
 		})
 	}
+	const dataJson = ref<Record<string, any>>({})
 	const onItemChange = (d: Record<string, any>) => {
 		console.log(d)
 	}
 	const onSubmit = (data: Record<string, any>) => {
+		dataJson.value = data
 		console.log(data)
+		formModalRef.value.close()
 		setTimeout(() => {
 			formModalRef.value.changeLoading(false)
 		}, 500)
@@ -238,14 +228,26 @@
 </script>
 <template>
 	<div class="container">
-		<h2>emFormModalEx表单</h2>
-		<el-button type="primary" @click="newData">新增</el-button>
-		<el-button type="warning" @click="editData">编辑</el-button>
+		<el-card>
+			<template #header>
+				<div>弹窗表单</div>
+			</template>
+			<div>
+				<el-button type="primary" @click="newData">新增数据</el-button>
+				<el-button type="warning" @click="editData">编辑编辑</el-button>
+			</div>
+			<div class="json-title">提交数据:</div>
+			<json-viewer :value="dataJson" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 		<em-form-modal
 			ref="formModalRef"
-			title="新增数据"
+			:title="title"
 			:form-data="formData"
 			:form-rules="formRules"
+			labelWidth="100px"
 			btnLoading
 			@on-item-change="onItemChange"
 			@on-submit="onSubmit"
@@ -253,8 +255,3 @@
 		/>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-	}
-</style>

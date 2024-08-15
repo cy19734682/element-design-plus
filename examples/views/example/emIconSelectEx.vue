@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-	import { EmIconSelect } from '../../../src'
+  import {EmIconSelect} from '../../../src'
+  import sourceCodeView from '@/components/sourceCodeView.vue'
+  import {code1} from "@/codeJson/emIconSelectEx"
 
 	defineOptions({
 		name: 'EmIconSelectEx'
@@ -8,16 +10,14 @@
 </script>
 <template>
 	<div class="container">
-		<h2>自定义图标</h2>
-		<div class="form-box">
-			<em-icon-select v-model="icon" />
-		</div>
+    <el-card>
+      <template #header>
+        <div>图标选择</div>
+      </template>
+      <em-icon-select v-model="icon" />
+      <template #footer>
+        <source-code-view :code="code1" />
+      </template>
+    </el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-		overflow-y: auto;
-		height: 100%;
-	}
-</style>

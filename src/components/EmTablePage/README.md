@@ -2,120 +2,6 @@
 
 分页表格组件
 
-### 基本使用
-#### 表格类型
-````javascript
-<em-table-page
-  ref="tableRef"
-  selection
-  url="/bt-table-page"
-  :columns="columns"
-  :searchData="searchData"
-  orderKey=""
-  @row-click="rowClick"
-  @selection-change="selectionChange"
-  @on-data-change="onDataChange"
-  />
-
-  data() {
-      return {
-        searchData: {},
-        columns:[
-          {
-            key: "id",
-            label: "ID"
-          },{
-            key: "name",
-            label: "名称"
-          },{
-            label: "操作",
-            width: 250,
-            render: (h, params) => {
-              return h("div", [
-                h("el-button", {
-                  props:{
-                    type:"warning"
-                  },
-                  on: {
-                    click: e => {
-                    }
-                  }
-                }, '编辑'),
-                h("el-button", {
-                  props:{
-                    type:"danger"
-                  },
-                  on: {
-                    click: e => {
-                    }
-                  }
-                }, "删除")
-              ])
-            }
-          },
-        ],
-      }
-    }
-
-    methods: {
-      rowClick(row){
-        console.log(row)
-      },
-      selectionChange(selection) {
-        console.log(selection)
-      },
-      onDataChange(d){
-        console.log(s)
-      }
-    }
-````
-
-#### 非表格类型
-````javascript
-<em-table-page
-  ref="tableRef"
-  url="/bt-table-page"
-  :columns="columns"
-  :searchData="searchData"
-  :isTable="false"
-  @on-data-change="onDataChange"
-  />
-
-  data() {
-      return {
-        searchData: {},
-        columns:[
-          {
-            key: "id",
-            label: "file_path",
-            render: (h, params) => {
-              return h('el-image', {
-                props: {
-                  fit: 'fill'
-                },
-                attrs: {
-                  src: window.global.serverImg + params.row.file_path
-                }
-              })
-            }
-          },
-        ],
-      }
-    }
-
-    methods: {
-      rowClick(row){
-        console.log(row)
-      },
-      selectionChange(selection) {
-        console.log(selection)
-      },
-      onDataChange(d){
-        console.log(s)
-      }
-    }
-````
-
 ### 组件属性
 
 |         参数          |          说明           |   类型    |                        可选值                        |                   默认值                   |
@@ -140,14 +26,14 @@
 |   currentPageKey    |       分页当前页码key       | String  |                         —                         |                 current                 |
 |     pageSizeKey     |      每页显示条目个数key      | String  |                         —                         |                  size                   |
 |      totalKey       |        总条目数key        | String  |                         —                         |                  total                  |
-|      defaultId       |       默认唯一key值        | String  |                         —                         |                   id                    |
-|      isTable       |        是否展示为表示        | Boolean |                         —                         |                  true                   |
-|      rowGutter       |        栅格间隔（非表格）        | Number |                         —                         |                    4                    |
-|      rowType       |        布局模式（非表格）        | String |                         —                         |                    —                    |
-|      rowJustify       |        flex 布局下的水平排列方式（非表格）        | String |   start/end/center/space-around/space-between	    |                  start                  |
-|      rowAlign       |        flex 布局下的垂直排列方式（非表格）        | String |                top/middle/bottom	                 |                    —                    |
-|      rowSpan       |        栅格占据的列数（非表格）        | Number |                        —	                         |                    6                    |
-|      rowBorderColor       |        单选时表格边框颜色（非表格）        | String |                        —	                         |                    #409eff                    |
+|      defaultId      |       默认唯一key值        | String  |                         —                         |                   id                    |
+|       isTable       |        是否展示为表示        | Boolean |                         —                         |                  true                   |
+|      rowGutter      |       栅格间隔（非表格）       | Number  |                         —                         |                    4                    |
+|       rowType       |       布局模式（非表格）       | String  |                         —                         |                    —                    |
+|     rowJustify      | flex 布局下的水平排列方式（非表格）  | String  |   start/end/center/space-around/space-between	    |                  start                  |
+|      rowAlign       | flex 布局下的垂直排列方式（非表格）  | String  |                top/middle/bottom	                 |                    —                    |
+|       rowSpan       |     栅格占据的列数（非表格）      | Number  |                        —	                         |                    6                    |
+|   rowBorderColor    |    单选时表格边框颜色（非表格）     | String  |                        —	                         |                 #409eff                 |
 
 ### 组件事件
 

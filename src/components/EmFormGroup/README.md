@@ -2,53 +2,6 @@
 
 表单组组件，相关用法见[EmForm](../EmForm/README.md)，用于页面内，组件自带确认和取消按钮，事件和方法与EmForm一致；
 
-### 基本使用
-
-````javascript
-<em-form-group
-  ref="formGroupRef"
-  :form-data="formData"
-  :form-rules="formRules"
-  btnLoading
-  @on-submit="onSubmit" 
-  />
-  
-  data()
-{
-  return {
-    formData: [
-      {
-        type: "input",
-        key: "name",
-        label: '名称'
-      }, {
-        type: "inputNumber",
-        label: "金额",
-        key: "price",
-      }
-    ],
-    formRules: {
-      name: {
-        required: true
-      },
-      price: {
-        required: true
-      }
-    }
-  }
-}
-
-methods: {
-  onSubmit(data)
-  {
-    console.log(data)
-    setTimeout(() => {
-      this.$refs.formGroupRef.changeLoading(false)
-    }, 500)
-  }
-}
-````
-
 ### 组件属性
 
 |        参数         |        说明         |   类型    |         可选值         |    默认值    |

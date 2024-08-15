@@ -14,7 +14,7 @@
 	const emit = defineEmits(['update:modelValue'])
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: string | number | any[] | File //绑定值
+			modelValue?: string | any[] | File //绑定值
 			uploadFetch?: boolean //是否抓取网络图片上传
 			url?: string //文件上传的地址
 			paramData?: Record<string, any> //文件上传其它参数
@@ -62,6 +62,15 @@
 		}
 		return header
 	})
+  const cloneVal = computed(() => {
+    if(Array.isArray(props.modelValue)){
+      return props.modelValue
+    }else if(isValidVal(props.modelValue)){
+      return [props.modelValue]
+    }else {
+      return []
+    }
+  })
 
 	watch(
 		() => props.modelValue,
@@ -118,7 +127,7 @@
 	 * 手动上传
 	 * 手动上传不能触发beforeUpload事件，所以用on-change事件
 	 */
-	const handleChange = (file: any, fileList: any[]) => {
+	const handleChange = (file: any) => {
 		if (props.autoUpload) {
 			//自动上传有下面的钩子拦截，不需要这个函数判断
 			return
@@ -127,16 +136,16 @@
 			let type = file?.name?.split('.').pop().toLocaleLowerCase() || ''
 			if (props.format.length > 0 && props.format.indexOf(type) < 0) {
 				ElMessage.warning('文件类型只支持' + ((props.format.length > 0 && String(props.format)) || '无'))
-				fileList.splice(fileList.length - 1, 1)
 				return false
 			}
 			if (file && props.maxSize && file.size > props.maxSize) {
 				ElMessage.warning('文件最大上传限制为' + (props.maxSize / 1024).toFixed(2) + 'kb')
-				fileList.splice(fileList.length - 1, 1)
 				return false
 			}
 		}
-		emitFileChange(fileList.map((e) => e.raw))
+		let _f: any = cloneDeep(cloneVal.value)
+		_f.push(file?.raw)
+		emitFileChange(_f)
 	}
 	/**
 	 * 自动上传
@@ -172,8 +181,8 @@
 	 */
 	const handleUploadSuccess = (res: any, file: any, files: any) => {
 		if (res?.code === 0) {
-			let _f = fileData.value
-			file.url = res.data.url || res.data || ''
+			let _f = cloneDeep(fileData.value)
+			file.url = res?.data?.url || res?.data || ''
 			_f?.push(file)
 			emitFileChange(_f.map((e: any) => e.url))
 		} else {
@@ -217,20 +226,15 @@
 	/**
 	 * 移除上传文件
 	 * @param file
-	 * @param fileList
 	 */
-	const handleRemove = (file: any, fileList: any[]) => {
+	const handleRemove = (file: any) => {
 		if (file) {
-			if (props.autoUpload) {
-				const _fileData = cloneDeep(fileData.value)
-				emitFileChange(_fileData.map((e: any) => e.url))
-			} else {
-				let _index = fileData.value.findIndex((e: any) => e.uid === file.uid)
-				if (_index > -1) {
-					fileData.value.splice(_index, 1)
-					emitFileChange(fileData.value.map((e: any) => e.raw))
-				}
-			}
+      let _index = fileData.value.findIndex((e: any) => e.uid === file.uid)
+      if (_index > -1) {
+        let _f: any = cloneDeep(cloneVal.value)
+        _f.splice(_index, 1)
+        emitFileChange(_f)
+      }
 		}
 	}
 	/**
@@ -314,18 +318,18 @@
 		</el-dialog>
 		<!--  网络图片抓取  -->
 		<el-dialog
-			title="网络地址"
+			:title="t('em.networkAddr')"
 			width="520px"
 			v-model="fetchModalVisible"
 			append-to-body
 			:show-close="false"
 			:close-on-click-modal="false"
 		>
-			<el-input class="wd70" v-model="fetchUrl" :placeholder="t('em.pInputFetchUrl')" />
-			<div style="text-align: center; margin-top: 15px">
+			<el-input v-model="fetchUrl" :placeholder="t('em.pInputFetchUrl')" />
+			<template #footer>
 				<el-button type="primary" @click="submitFetch">{{ t('em.button.confirm') }}</el-button>
 				<el-button @click="fetchModalVisible = false">{{ t('em.button.cancel') }}</el-button>
-			</div>
+			</template>
 		</el-dialog>
 	</div>
 </template>

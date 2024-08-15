@@ -1,23 +1,27 @@
 <script lang="ts" setup>
 	import { EmColorGroup } from '../../../src'
+	import { code1 } from '@/codeJson/emColorGroupEx'
+	import sourceCodeView from '@/components/sourceCodeView.vue'
+  import {cloneDeep} from "lodash-es"
 
 	defineOptions({
 		name: 'EmColorGroupEx'
 	})
 
-  const colors = ref<string[]>(['#ccc','#ccc','#ccc','#ccc','#ccc','#ccc'])
-
+	const colorsVal = ref<string[]>(['#ccc', '#ccc'])
 </script>
 <template>
 	<div class="container">
-		<h2>颜色组</h2>
-    <div style="width: 100px;">
-      <em-color-group v-model="colors" is-add-del/>
-    </div>
+		<el-card>
+			<template #header>
+				<div>颜色组</div>
+			</template>
+			<em-color-group v-model="colorsVal" is-add-del />
+			<div class="json-title">绑定数据:</div>
+			<json-viewer :value="cloneDeep(colorsVal)" theme="my-awesome-json-theme" expanded copyable />
+			<template #footer>
+				<source-code-view :code="code1" />
+			</template>
+		</el-card>
 	</div>
 </template>
-<style lang="scss" scoped>
-	.container {
-		padding: 40px;
-	}
-</style>

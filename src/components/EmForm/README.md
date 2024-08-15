@@ -2,215 +2,6 @@
 
 表单聚合组件，融合了表单常用的功能组件
 
-### 基本使用
-
-````javascript
-<em-form 
-  :form-data = "formData"
-  :formRules = "formRules"
-  show-inline-ok-bt
-  show-inline-clear-bt
-  @on-submit="onSubmit"
-  @on-item-change="onItemChange" >
-  <template #sgInput = "{dataGroup}" > 
-    <el-input  v-model="dataGroup.sgInput" /> 
-  </template>
-</em-form>
-
-data(){
-  return {
-    formData: [
-      {
-        type: "txt",
-        label: "信息",
-        val: "这是一条占位信息",
-      }, {
-        type: "input",
-        label: "名称",
-        key: "name",
-        defaultVal: "121"
-      }, {
-        type: "inputNumber",
-        label: "金额",
-        key: "price",
-      }, {
-        type: 'select',
-        label: '学历',
-        key: 'education',
-        options: [
-          {
-            label: '高中',
-            val: 1
-          }, {
-            label: '专科',
-            val: 2
-          }, {
-            label: '本科',
-            val: 3
-          }, {
-            label: '研究生',
-            val: 4
-          }, {
-            label: '博士',
-            val: 5,
-            disabled: true
-          }
-        ]
-      }, {
-        type: 'radio',
-        key: 'sex',
-        label: '性别',
-        options: [
-          {
-            label: '男',
-            val: 1
-          }, {
-            label: '女',
-            val: 0
-          }
-        ]
-      }, {
-        type: 'checkbox',
-        label: '证书',
-        key: 'credential',
-        checkboxType: "button",
-        options: [
-          {
-            label: '英语四级',
-            val: 'CET4',
-          }, {
-            label: '英语六级',
-            val: 'CET6',
-            disabled: true
-          },
-        ]
-      }, {
-        type: "upload",
-        label: "文件上传",
-        key: "imgUrl",
-        autoUpload: false
-      }, {
-        type: "selectIcon",
-        label: "图标",
-        key: "icon",
-        defaultVal: 'lock'
-      }, {
-        type: "area",
-        label: "行政区域",
-        key: "areaCode",
-        key2: "areaName",
-      }, {
-        type: "cascader",
-        label: "部门",
-        url: '/dept',
-        key: "deptId",
-        key2: "deptName"
-      }, {
-        type: "select",
-        label: "品牌",
-        key: "brandId",
-        asyncOption: true,
-        optionUrl: "/brand",
-        optionLabel: "name",
-        optionVal: "id",
-      }, {
-        type: "tableSelect",
-        label: "文档类型",
-        key: "mimeType",
-        multiple: true,
-        url: "/bt-table-page",
-        searchForm: [
-          {
-            type: 'input',
-            key: 'name',
-            label: '商品名称',
-          }
-        ],
-        columns: [
-          {
-            key: "id",
-            label: "ID"
-          }, {
-            key: "name",
-            label: "名称"
-          }
-        ],
-      }, {
-        type: "bdMap",
-        label: "位置",
-        key: "lng",
-        key2: "lat",
-        key3: "address"
-      }, {
-        type: "editor",
-        label: "内容",
-        key: "content",
-      }, {
-        type: "date",
-        dateType: "datetime",
-        label: "日期时间",
-        key: "datetime",
-      }, {
-        type: "custom",
-        label: "自定义",
-        key: "sgInput",
-        slotName: "sgInput"
-      },
-    ],
-    formRules: {
-      name: {
-        required: true
-      },
-      price: {
-        required: true
-      },
-      education: {
-        required: true
-      },
-      sex: {
-        required: true
-      },
-      credential: {
-        required: true
-      },
-      imgUrl: {
-        required: true
-      },
-      areaCode: {
-        required: true
-      },
-      deptId: {
-        required: true
-      },
-      lng: {
-        required: true
-      },
-      content: {
-        required: true
-      },
-      icon: {
-        required: true
-      },
-      mimeType: {
-        required: true,
-        trigger: "blur",
-      }
-    }
-  }
-}
-
-methods: {
-  onItemChange(data)
-  {
-    console.log(data)
-  },
-  onSubmit(data)
-  {
-    console.log(data)
-  }
-}
-````
-
 ### 组件属性
 
 |        参数         |        说明         |   类型    |         可选值         |   默认值   |
@@ -258,16 +49,16 @@ methods: {
 
 #### form-item 表单项公共属性
 
-|     参数      |                                                                                 说明                                                                                  |          类型           |                                                              可选值                                                               |  默认值  |
-|:-----------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------:|:------------------------------------------------------------------------------------------------------------------------------:|:-----:|
-|    type     |                                                                                表单项类型                                                                                |        String         | txt，input，inputNumber，select，radio，checkbox，textarea，date，time，upload，area，cascader，bdMap，editor，selectIcon，tableSelect，custom |   —   |
-|     key     |                                                                               表单收集的字段                                                                               |        String         |                                                               —                                                                |   —   |
-|    label    |                                                                               表单标签文本                                                                                |        String         |                                                               —                                                                |   —   |
-|    show     | 是否显示该选项，若为false，不收集该字段的值；<br/>基本格式：{key:'test',val:['zh','li']}，表示只有当test是zh或li时才展示；<br/>也可以设置多个字段，并用数组包装，所有条件满足才展示；<br/>也可以传一个回调函数，回调参数是表单所有选项的值，需要返回一个布尔值来确定是否展示； | Object/Array/Function |                                                               —                                                                |   —   |
-|   showOr    |                                                             当show为数组时，showOr设置为true表示只要满足数组中的任意一个条件即可展示                                                             |        Boolean        |                                                               —                                                                | false |
-| labelWidth  |                                                                    标签宽度，默认使用form组件的labelWidth属性                                                                     |        String         |                                                               —                                                                |   —   |
-|  disabled   |                                                                               是否禁用该选项                                                                               |        Boolean        |                                                               —                                                                | false |
-| showMessage |                                                                             是否显示校验错误信息                                                                              |        Boolean        |                                                               —                                                                | true  |
+|     参数      |                                                                                 说明                                                                                  |          类型           |                                                                                         可选值                                                                                          |  默认值  |
+|:-----------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----:|
+|    type     |                                                                                表单项类型                                                                                |        String         | txt，input，inputNumber，switch，slider，rate，select，selectInput，radio，checkbox，textarea，date，time，upload，area，cascader，bdMap，editor，colorPicker，colorGroup，selectIcon，tableSelect，custom |   —   |
+|     key     |                                                                               表单收集的字段                                                                               |        String         |                                                                                          —                                                                                           |   —   |
+|    label    |                                                                               表单标签文本                                                                                |        String         |                                                                                          —                                                                                           |   —   |
+|    show     | 是否显示该选项，若为false，不收集该字段的值；<br/>基本格式：{key:'test',val:['zh','li']}，表示只有当test是zh或li时才展示；<br/>也可以设置多个字段，并用数组包装，所有条件满足才展示；<br/>也可以传一个回调函数，回调参数是表单所有选项的值，需要返回一个布尔值来确定是否展示； | Object/Array/Function |                                                                                          —                                                                                           |   —   |
+|   showOr    |                                                             当show为数组时，showOr设置为true表示只要满足数组中的任意一个条件即可展示                                                             |        Boolean        |                                                                                          —                                                                                           | false |
+| labelWidth  |                                                                    标签宽度，默认使用form组件的labelWidth属性                                                                     |        String         |                                                                                          —                                                                                           |   —   |
+|  disabled   |                                                                               是否禁用该选项                                                                               |        Boolean        |                                                                                          —                                                                                           | false |
+| showMessage |                                                                             是否显示校验错误信息                                                                              |        Boolean        |                                                                                          —                                                                                           | true  |
 
 #### txt 文本
 
@@ -277,14 +68,15 @@ methods: {
 
 #### input 输入框
 
-|      参数      |     说明     |   类型    | 可选值 |  默认值  |
-|:------------:|:----------:|:-------:|:---:|:-----:|
-|  maxLength   |   最大输入长度   | Number  |  —  |   —   |
-|  minLength   |   最小输入长度   | Number  |  —  |   —   |
-| placeholder  |    占位符     | String  |  —  |  请输入  |
-| showPassword | 是否展示切换密码图标 | Boolean |  —  | false |
-|   prepend    |  输入框前置内容   |  Slots  |  —  |   —   |
-|    append    |  输入框后置内容   |  Slots  |  —  |   —   |
+|      参数      |     说明     |   类型    |  可选值  |  默认值  |
+|:------------:|:----------:|:-------:|:-----:|:-----:|
+|  maxLength   |   最大输入长度   | Number  |   —   |   —   |
+|  minLength   |   最小输入长度   | Number  |   —   |   —   |
+| placeholder  |    占位符     | String  |   —   |  请输入  |
+| showPassword | 是否展示切换密码图标 | Boolean |   —   | false |
+|   prepend    |  输入框前置内容   |  Slots  |   —   |   —   |
+|    append    |  输入框后置内容   |  Slots  |   —   |   —   |
+|   disabled   |  是否禁用该子选项  | Boolean | false |
 
 #### InputNumber 数字输入框
 
@@ -296,7 +88,8 @@ methods: {
 |    precision     |   数值精度   | Number  |   —   |  1   |
 |   placeholder    |   占位符    | String  |   —   | 请输入  |
 |     controls     | 是否使用控制按钮 | Boolean |   —   | true |
-| controlsPosition |    控制按钮位置  | String  | right |  —   |
+| controlsPosition |  控制按钮位置  | String  | right |  —   |
+|     disabled     | 是否禁用该子选项 | Boolean | false |
 
 #### Switch  开关
 
@@ -356,6 +149,24 @@ methods: {
 | val          | 子选项值              | —            | —     |
 | disabled     | 是否禁用该子选项          | Boolean      | false |
 
+#### EmSelectInput 下拉选择输入框
+
+详情见[EmSelectInput](../EmSelectInput/README.md)
+
+|        参数         |              说明               |          类型           | 可选值 |  默认值  |
+|:-----------------:|:-----------------------------:|:---------------------:|:---:|:-----:|
+|        url        |           远程拉取数据的地址           |        string         |  —  |   —   |
+|       data        |             静态数据              |         Array         |  —  |  []   |
+|     selectKey     | select选择框的key，当这个值存在时，会返回2个字段 |        string         |  —  |   —   |
+|    selectWidth    |          select选择框宽度          |        string         |  —  | 120px |
+|     optionVal     |        v-model收集节点的字段         |        string         |  —  |  val  |
+|    optionLabel    |          选项的标签对应接口字段          |        string         |  —  | label |
+|   optionFilter    |           筛选待选项的方法            |       Function        |  —  |   —   |
+|    filterable     |             是否可搜索             |        Boolean        |  —  | true  |
+|     disabled      |             是否禁用              |        Boolean        |  —  | false |
+| selectPlaceholder |              占位符              |        string         |  —  |  请选择  |
+| inputPlaceholder  |              占位符              |        string         |  —  |  请输入  |
+
 #### radio 单选组
 
 | 参数         | 说明                      | 类型        | 可选值                 | 默认值     |
@@ -381,6 +192,16 @@ methods: {
 | val          | checkbox的值                 | —            | —                   |
 | itemBorder   | Checkbox是否展示边框             | Boolean      | false               |
 | disabled     | 是否禁用该子选项                   | Boolean      | false               |
+
+#### textarea 多行文本框
+
+| 参数            | 说明         | 类型              | 可选值   | 默认值            |
+|---------------|------------|-----------------|-------|----------------|
+| autosize      | 高度是否自适应    | Boolean /Object | -     | { minRows: 2 } |
+| maxLength     | 最大输入长度     | Number          | —     | —              |
+| showWordLimit | 是否显示统计字数,  | Boolean         | —     | false          |
+| placeholder   | 占位符        | String          | —     | 请输入            |
+| disabled      | 是否禁用该子选项   | Boolean         | false |
 
 #### date 日期组件
 
@@ -409,24 +230,6 @@ methods: {
 |  disabledHours   | 禁止选择部分小时选项(参考el-time-picker组件) | Function |          —          |   -   |
 | disabledMinutes  | 禁止选择部分分钟选项(参考el-time-picker组件) | Function |          —          |   -   |
 | disabledSeconds  | 禁止选择部分秒选项(参考el-time-picker组件)  | Function |          —          |   -   |
-
-#### EmSelectInput 下拉选择输入框
-
-详情见[EmSelectInput](../EmSelectInput/README.md)
-
-|        参数         |              说明               |          类型           | 可选值 |  默认值  |
-|:-----------------:|:-----------------------------:|:---------------------:|:---:|:-----:|
-|        url        |           远程拉取数据的地址           |        string         |  —  |   —   |
-|       data        |             静态数据              |         Array         |  —  |  []   |
-|     selectKey     | select选择框的key，当这个值存在时，会返回2个字段 |        string         |  —  |   —   |
-|    selectWidth    |          select选择框宽度          |        string         |  —  | 120px |
-|     optionVal     |        v-model收集节点的字段         |        string         |  —  |  val  |
-|    optionLabel    |          选项的标签对应接口字段          |        string         |  —  | label |
-|   optionFilter    |           筛选待选项的方法            |       Function        |  —  |   —   |
-|    filterable     |             是否可搜索             |        Boolean        |  —  | true  |
-|     disabled      |             是否禁用              |        Boolean        |  —  | false |
-| selectPlaceholder |              占位符              |        string         |  —  |  请选择  |
-| inputPlaceholder  |              占位符              |        string         |  —  |  请输入  |
 
 #### upload 上传组件
 
@@ -505,6 +308,28 @@ methods: {
 |    height     |   编辑框高度   | string  |       —        |  300px  |
 |   disabled    |   是否禁用    | Boolean |       —        |  false  |
 |  placeholder  |    占位符    | string  |       —        |    —    |
+
+#### colorPicker 颜色选择
+
+|     参数      |         说明          |            类型             |   可选值   |  默认值  |
+|:-----------:|:-------------------:|:-------------------------:|:-------:|:-----:|
+| colorFormat |  写入 v-model 的颜色的格式  |           enum            |    —    |   -   |
+| popperClass | 	ColorPicker 下拉框的类名 |          string           |    —    |   -   |
+|  showAlpha  |       是否显示透明色       |          boolean          |    —    | false |
+|  predefine  |        预定义颜色        |          object           |    —    |   -   |
+|    size     |         大小          | string /'large'/'default' | 'small' | small |
+|  disabled   |        是否禁用         |          boolean          |    -    | false |
+
+#### colorGroup 颜色组选择
+
+|       参数        |    说明     |            类型             |   可选值   |  默认值  |
+|:---------------:|:---------:|:-------------------------:|:-------:|:-----:|
+| value / v-model |    绑定值    |           Array           |    —    |   —   |
+|    showAlpha    |  是否显示透明色  |          boolean          |    —    | false |
+|     remain      | 剩余几个时不可删除 |          Number           |    —    |   0   |
+|    isAddDel     | 是否可以新增和删除 |          boolean          |    —    | true  |
+|      size       |    大小     | string /'large'/'default' | 'small' | small |
+|    disabled     |   是否禁用    |          boolean          |    -    | false |
 
 #### selectIcon 图标选择
 

@@ -3,23 +3,22 @@ import * as XLSX from 'xlsx'
 
 /**
  * 通过表格dom导出Excel
- * @param id 表格ID
+ * @param dom 表格dom
  * @param b 开始列数
  * @param e 结束列数
  * @param filename 导出名称
  * @param bookType 导出文件格式
  */
 export function exportTableToExcel(
-	id: string,
+  dom: HTMLElement,
 	b: number,
 	e: number,
 	filename: string = 'excel-list',
 	bookType: any = 'xlsx'
 ) {
-	const theTable: HTMLElement = document.getElementById(id) as HTMLElement
-	const data = generateArray(theTable, b, e)
-	const ws_name = 'SheetJS'
-	const wb:any = Workbook,
+	const data = generateArray(dom, b, e)
+  const ws_name = 'SheetJS'
+	const wb:any =  XLSX.utils.book_new(),
 		ws = sheet_from_array_of_arrays(data)
 	/* add worksheet to workbook */
 	wb.SheetNames.push(ws_name)
@@ -63,7 +62,7 @@ export function exportJsonToExcel({
 		data.unshift(multiHeader[i])
 	}
 	const ws_name = 'SheetJS'
-	const wb:any = Workbook,
+	const wb:any =  XLSX.utils.book_new(),
 		ws = sheet_from_array_of_arrays(data)
 	if (merges.length > 0) {
 		if (!ws['!merges']) {
@@ -125,9 +124,9 @@ function generateArray(table: HTMLElement, b: number = 0, e: number) {
 	const out:any[] = []
 	const rows = table.querySelectorAll('tr')
 	for (let R = 0; R < rows.length; ++R) {
-		const outRow:any[] = []
+    const outRow:any[] = []
 		const row = rows[R]
-		let columns = row.querySelectorAll('td')
+    let columns = row.querySelectorAll('td')
 		if (!(columns && columns.length > 0)) {
 			columns = row.querySelectorAll('th')
 		}
@@ -135,14 +134,11 @@ function generateArray(table: HTMLElement, b: number = 0, e: number) {
 		for (let C = b; C < length; ++C) {
 			const cell = columns[C]
 			let cellValue: any = cell.innerText
-			if (cellValue !== '') {
-				cellValue = +cellValue
-			}
-			outRow.push(cellValue !== '' ? cellValue : null)
+      outRow.push(cellValue !== '' ? cellValue : null)
 		}
 		out.push(outRow)
 	}
-	return out
+  return out
 }
 
 function datenum(v: Date) {
@@ -206,11 +202,6 @@ function sheet_from_array_of_arrays(data: any[]) {
 		ws['!ref'] = XLSX.utils.encode_range(range)
 	}
 	return ws
-}
-
-const Workbook = {
-	SheetNames: [],
-	Sheets: {}
 }
 
 function s2ab(s: any): ArrayBuffer {

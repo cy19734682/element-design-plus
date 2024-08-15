@@ -62,3 +62,91 @@ a:hover {
   border-radius: 4px;
   background: #ddd;
 }
+
+.container {
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+.json-title{
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.my-awesome-json-theme {
+  max-height: 500px;
+  overflow: auto;
+  background: #363e4f;
+  white-space: nowrap;
+  color: #fff;
+  font-size: 14px;
+  font-family: Consolas, Menlo, Courier, monospace;
+
+  .jv-ellipsis {
+    color: #ff9900;
+    background-color: #808695;
+    display: inline-block;
+    line-height: 0.9;
+    font-size: 0.9em;
+    padding: 0 4px 2px 4px;
+    border-radius: 3px;
+    vertical-align: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .jv-button {
+    color: #49b3ff;
+  }
+
+  .jv-key {
+    color: #eaf3ff;
+  }
+
+  .jv-item {
+    &.jv-array {
+      color: #eaf3ff;
+    }
+
+    &.jv-boolean {
+      color: #fc1e70;
+    }
+
+    &.jv-function {
+      color: #067bca;
+    }
+
+    &.jv-number {
+      color: #fc1e70;
+    }
+
+    &.jv-object {
+      color: #eaf3ff;
+    }
+
+    &.jv-undefined {
+      color: #e08331;
+    }
+
+    &.jv-string {
+      color: #42b983;
+      word-break: break-word;
+      white-space: normal;
+    }
+  }
+
+  .jv-code {
+    .jv-toggle {
+      &:before {
+        padding: 0 2px;
+        border-radius: 2px;
+      }
+
+      &:hover {
+        &:before {
+          background: #eee;
+        }
+      }
+    }
+  }
+}

@@ -166,7 +166,7 @@
 			<bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" />
 			<!-- 定位当前位置 -->
 			<bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" show-address-bar auto-location />
-			<bm-local-search :keyword="keyword" auto-viewport @infohtmlset="infohtmlset" />
+			<bm-local-search class="em-local-search" :keyword="keyword" auto-viewport @infohtmlset="infohtmlset" />
 		</baidu-map>
 	</div>
 </template>

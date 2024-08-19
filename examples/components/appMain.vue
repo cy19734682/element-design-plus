@@ -45,7 +45,7 @@
       display: flex;
       .app-container{
         flex: 1;
-        width: 100%;
+        min-width: 0;
         padding: 10px;
       }
     }

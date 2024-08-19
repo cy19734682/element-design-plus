@@ -1,152 +1,165 @@
 body {
-  height: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+	height: 100%;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-family:
+		Helvetica Neue,
+		Helvetica,
+		PingFang SC,
+		Hiragino Sans GB,
+		Microsoft YaHei,
+		Arial,
+		sans-serif;
 }
 
 label {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 html {
-  height: 100%;
-  box-sizing: border-box;
+	height: 100%;
+	box-sizing: border-box;
 }
 
 #app {
-  height: 100%;
+	height: 100%;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 .no-padding {
-  padding: 0 !important;
+	padding: 0 !important;
 }
 
 .padding-content {
-  padding: 4px 0;
+	padding: 4px 0;
 }
 
 a:focus,
 a:active {
-  outline: none;
+	outline: none;
 }
 
 a,
 a:focus,
 a:hover {
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
+	cursor: pointer;
+	color: inherit;
+	text-decoration: none;
 }
 
 .el-table th.gutter {
-  display: table-cell !important;
+	display: table-cell !important;
 }
 
 *::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+	width: 4px;
+	height: 4px;
 }
 *::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background: #5e708d;
+	border-radius: 4px;
+	background: #5e708d;
 }
 *::-webkit-scrollbar-track {
-  border-radius: 4px;
-  background: #ddd;
+	border-radius: 4px;
+	background: #ddd;
 }
 
 .container {
-  padding: 20px;
-  overflow-y: auto;
-  height: 100%;
-}
-.json-title{
-  font-size: 16px;
-  margin: 20px 0;
+	padding: 20px;
+	overflow-y: auto;
+	height: 100%;
+
+	.el-card {
+		overflow: visible;
+    --el-card-padding: 0;
+	}
+
+	.json-title {
+		font-size: 16px;
+		margin: 20px 0;
+	}
 }
 
 .my-awesome-json-theme {
-  max-height: 500px;
-  overflow: auto;
-  background: #363e4f;
-  white-space: nowrap;
-  color: #fff;
-  font-size: 14px;
-  font-family: Consolas, Menlo, Courier, monospace;
+	max-height: 500px;
+	overflow: auto;
+	background: #363e4f;
+	white-space: nowrap;
+	color: #fff;
+	font-size: 14px;
+	font-family: Consolas, Menlo, Courier, monospace;
 
-  .jv-ellipsis {
-    color: #ff9900;
-    background-color: #808695;
-    display: inline-block;
-    line-height: 0.9;
-    font-size: 0.9em;
-    padding: 0 4px 2px 4px;
-    border-radius: 3px;
-    vertical-align: 0;
-    cursor: pointer;
-    user-select: none;
-  }
+	.jv-ellipsis {
+		color: #ff9900;
+		background-color: #808695;
+		display: inline-block;
+		line-height: 0.9;
+		font-size: 0.9em;
+		padding: 0 4px 2px 4px;
+		border-radius: 3px;
+		vertical-align: 0;
+		cursor: pointer;
+		user-select: none;
+	}
 
-  .jv-button {
-    color: #49b3ff;
-  }
+	.jv-button {
+		color: #49b3ff;
+	}
 
-  .jv-key {
-    color: #eaf3ff;
-  }
+	.jv-key {
+		color: #eaf3ff;
+	}
 
-  .jv-item {
-    &.jv-array {
-      color: #eaf3ff;
-    }
+	.jv-item {
+		&.jv-array {
+			color: #eaf3ff;
+		}
 
-    &.jv-boolean {
-      color: #fc1e70;
-    }
+		&.jv-boolean {
+			color: #fc1e70;
+		}
 
-    &.jv-function {
-      color: #067bca;
-    }
+		&.jv-function {
+			color: #067bca;
+		}
 
-    &.jv-number {
-      color: #fc1e70;
-    }
+		&.jv-number {
+			color: #fc1e70;
+		}
 
-    &.jv-object {
-      color: #eaf3ff;
-    }
+		&.jv-object {
+			color: #eaf3ff;
+		}
 
-    &.jv-undefined {
-      color: #e08331;
-    }
+		&.jv-undefined {
+			color: #e08331;
+		}
 
-    &.jv-string {
-      color: #42b983;
-      word-break: break-word;
-      white-space: normal;
-    }
-  }
+		&.jv-string {
+			color: #42b983;
+			word-break: break-word;
+			white-space: normal;
+		}
+	}
 
-  .jv-code {
-    .jv-toggle {
-      &:before {
-        padding: 0 2px;
-        border-radius: 2px;
-      }
+	.jv-code {
+		.jv-toggle {
+			&:before {
+				padding: 0 2px;
+				border-radius: 2px;
+			}
 
-      &:hover {
-        &:before {
-          background: #eee;
-        }
-      }
-    }
-  }
+			&:hover {
+				&:before {
+					background: #eee;
+				}
+			}
+		}
+	}
 }

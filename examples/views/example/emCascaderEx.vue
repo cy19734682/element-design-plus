@@ -68,7 +68,7 @@
 				@on-val-change="onValChange"
 				@on-name-change="onNameChange2"
 			/>
-			<div class="json-title">名称数据:</div>
+			<div class="json-title">绑定数据:</div>
 			<json-viewer :value="name2" theme="my-awesome-json-theme" expanded copyable />
 			<template #footer>
 				<source-code-view :code="code2" />

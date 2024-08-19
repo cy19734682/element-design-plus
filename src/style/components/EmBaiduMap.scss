@@ -18,4 +18,10 @@
     width: 100%;
     height: 25px;
   }
+
+  .em-local-search{
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+  }
 }

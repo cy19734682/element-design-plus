@@ -14,34 +14,51 @@
 </script>
 <template>
 	<div class="source-container">
-		<div v-show="show">
+		<div v-show="show" class="source-box">
 			<highlightjs language="javascript" :code="props.code"></highlightjs>
 		</div>
-		<div class="example-control">
-			<span v-show="!show" @click="show = true"
+		<div class="example-control" :class="{ show }" @click="show = !show">
+			<span v-show="!show"
 				><el-icon><ArrowDown /></el-icon>查看源代码</span
 			>
-			<span v-show="show" @click="show = false"
+			<span v-show="show"
 				><el-icon><ArrowUp /></el-icon>隐藏源代码</span
 			>
 		</div>
 	</div>
 </template>
 <style lang="scss" scoped>
-	.example-control {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-    color: #909399;
-		&:hover {
-			color: #409eff;
+	.source-container {
+		.source-box {
+			padding: 15px;
 		}
-		span {
-			font-size: 14px;
-      i{
-        margin-right: 10px;
-      }
+		.example-control {
+      height: 44px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			color: #909399;
+			background-color: #ffffff;
+			box-sizing: border-box;
+			position: sticky;
+			left: 0;
+			right: 0;
+			/*上层元素有个有padding会影响*/
+			bottom: -30px;
+			z-index: 10;
+			&.show {
+				border-top: 1px solid #e4e7ed;
+			}
+			&:hover {
+				color: #409eff;
+			}
+			span {
+				font-size: 14px;
+				i {
+					margin-right: 10px;
+				}
+			}
 		}
 	}
 </style>

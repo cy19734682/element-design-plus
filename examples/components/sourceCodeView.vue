@@ -1,5 +1,8 @@
 <script setup lang="ts">
 	import { ArrowUp, ArrowDown } from '@element-plus/icons-vue'
+	import { useI18n } from 'vue-i18n'
+
+	const { t } = useI18n()
 
 	const props = withDefaults(
 		defineProps<{
@@ -19,10 +22,10 @@
 		</div>
 		<div class="example-control" :class="{ show }" @click="show = !show">
 			<span v-show="!show"
-				><el-icon><ArrowDown /></el-icon>查看源代码</span
+				><el-icon><ArrowDown /></el-icon>{{ t('button.viewSourceCode') }}</span
 			>
 			<span v-show="show"
-				><el-icon><ArrowUp /></el-icon>隐藏源代码</span
+				><el-icon><ArrowUp /></el-icon>{{ t('button.hideSourceCode') }}</span
 			>
 		</div>
 	</div>
@@ -33,7 +36,7 @@
 			padding: 15px;
 		}
 		.example-control {
-      height: 44px;
+			height: 44px;
 			display: flex;
 			justify-content: center;
 			align-items: center;

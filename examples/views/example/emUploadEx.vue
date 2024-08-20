@@ -33,7 +33,7 @@
 			<em-upload
 				v-model="id2"
 				:auto-upload="false"
-        :length="3"
+				:length="3"
 				fileName="files"
 				listType="picture-card"
 				@update:modelValue="onfileChange"

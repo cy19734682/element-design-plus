@@ -3,7 +3,7 @@
 	import { useStore } from '@/store/main'
 	import { code1 } from '@/codeJson/emTableSelectEx'
 	import sourceCodeView from '@/components/sourceCodeView.vue'
-  import {cloneDeep} from "lodash-es"
+	import { cloneDeep } from 'lodash-es'
 
 	defineOptions({
 		name: 'emTableSelectEx'

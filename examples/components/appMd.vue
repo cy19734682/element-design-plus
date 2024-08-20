@@ -19,40 +19,57 @@
 	const mdContent = computed(() => (props.routeNow && mds_c[props.routeNow]) || mds_c[routeName.value])
 </script>
 <template>
-	<div class="app-markdown">
-		<div class="markdown-body" v-show="showRightBar">
+	<div class="app-markdown" :class="{ show: showRightBar }">
+		<div class="markdown-body">
 			<div class="md-content" v-html="md.render(mdContent || '')"></div>
 		</div>
 		<div class="markdown-btn" :class="{ none: !showRightBar }" @click="showRightBar = !showRightBar">
-			<el-icon size="24" color="#fff" v-if="showRightBar"><ArrowRight /></el-icon>
-			<el-icon size="24" color="#fff" v-else><ArrowLeft /></el-icon>
+			<el-icon size="14" v-if="showRightBar"><ArrowRight /></el-icon>
+			<el-icon size="14" v-else><ArrowLeft /></el-icon>
 		</div>
 	</div>
 </template>
 <style lang="scss" scoped>
 	.app-markdown {
-    height: 100%;
+		width: 0;
+		height: 100%;
 		position: relative;
+		transition: all 0.2s;
+
+		&.show {
+			width: 600px;
+		}
+
 		.markdown-body {
-      width: 600px;
-      padding: 10px;
-      height: 100%;
-      position: relative;
+			padding: 10px;
+			width: 600px;
+			height: 100%;
+			position: relative;
 			border-left: 1px solid #dcdfe6;
-      overflow-y: auto;
-      font-size: 14px;
+			overflow-y: auto;
+			font-size: 14px;
 		}
 		.markdown-btn {
 			position: absolute;
 			z-index: 1000;
-			top: 50%;
-			opacity: 0.8;
+			top: 40%;
+			left: -12px;
 			cursor: pointer;
-			background: #2c3e50;
-      border-radius: 0 10px 10px 0;
+			width: 24px;
+			height: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #fff;
+			border: 1px solid #dcdfe6;
+			box-shadow: 0 4px 10px #0000001a;
+			transition: all 0.15s;
+			border-radius: 50%;
+			&:hover {
+				transform: scale(1.1);
+			}
 			&.none {
 				left: -24px;
-        border-radius: 10px 0 0 10px;
 			}
 		}
 	}

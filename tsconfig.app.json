@@ -9,7 +9,8 @@
 		"./examples/**/*.json",
 		"./examples/**/*",
 		"./mock/**/*.ts",
-		"./mock/*.ts"
+		"./mock/*.ts",
+		"./package.json"
 	],
 	"exclude": [],
 	"compilerOptions": {

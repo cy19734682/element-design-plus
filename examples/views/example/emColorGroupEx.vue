@@ -2,7 +2,7 @@
 	import { EmColorGroup } from '../../../src'
 	import { code1 } from '@/codeJson/emColorGroupEx'
 	import sourceCodeView from '@/components/sourceCodeView.vue'
-  import {cloneDeep} from "lodash-es"
+	import { cloneDeep } from 'lodash-es'
 
 	defineOptions({
 		name: 'EmColorGroupEx'

@@ -1,4 +1,4 @@
-export const code1: string =`
+export const code1: string = `
 <script lang="ts" setup>
   const formData = ref<any[]>([
     {

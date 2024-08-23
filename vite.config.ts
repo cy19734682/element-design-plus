@@ -10,7 +10,7 @@ import { viteMockServe } from 'vite-plugin-mock'
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfig => {
 	const isLib = mode === 'lib'
-  let libOption = {
+	let libOption = {
 		entry: resolve(__dirname, 'src/index.ts'),
 		name: 'elmDesign',
 		fileName: 'elmDesign'
@@ -109,13 +109,13 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
 			viteMockServe({
 				ignore: /^_/,
 				mockPath: 'mock',
-        localEnabled: command === 'serve',
-        prodEnabled: command !== 'serve' && !isLib,
-        injectCode: `
+				localEnabled: command === 'serve',
+				prodEnabled: command !== 'serve' && !isLib,
+				injectCode: `
           import { setupProdMockServer } from '../mock/_createProductionServer';
           setupProdMockServer();
         `,
-        injectFile: 'examples/main.ts'
+				injectFile: 'examples/main.ts'
 			})
 		],
 		resolve: {
@@ -134,7 +134,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
 		},
 		css: {
 			preprocessorOptions: {
-				less: {
+				scss: {
 					javascriptEnabled: true,
 					rewriteUrls: 'all',
 					math: 'always'

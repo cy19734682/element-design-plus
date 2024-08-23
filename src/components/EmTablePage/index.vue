@@ -300,7 +300,6 @@
 			:reserve-selection="selection"
 			@selection-change="handleSelectionChange"
 			@row-click="handleRowClick"
-			:header-cell-style="{ backgroundColor: '#f1f1f1' }"
 		>
 			<!--多选框-->
 			<el-table-column v-if="selection" type="selection" width="50" align="center"></el-table-column>

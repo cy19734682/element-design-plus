@@ -92,8 +92,8 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			background-color: #fff;
-			border: 1px solid #dcdfe6;
+			background-color: var(--el-bg-color-overlay);
+      border: 1px solid var(--el-border-color-light);
 			box-shadow: 0 4px 10px #0000001a;
 			transition: all 0.15s;
 			border-radius: 50%;

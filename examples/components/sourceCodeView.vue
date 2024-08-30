@@ -58,7 +58,7 @@
 			left: 0;
 			right: 0;
 			/*上层元素有个有padding会影响*/
-			bottom: -30px;
+			bottom: -20px;
 			z-index: 10;
 			&.show {
 				border-top: 1px solid var(--el-card-border-color);

@@ -101,9 +101,9 @@ export const useStore = defineStore(
 			() => isDark.value,
 			(v: boolean) => {
 				if (v) {
-					document.documentElement.classList.remove('dark')
+          document.documentElement.classList.add('dark')
 				} else {
-					document.documentElement.classList.add('dark')
+          document.documentElement.classList.remove('dark')
 				}
 			},
 			{ immediate: true }

@@ -41,6 +41,33 @@
 		store.logout()
 	}
 
+	const switchMode = (e: any) => {
+		const x = e.clientX
+		const y = e.clientY
+		const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+		// 兼容性处理
+		if (!(window?.document as any)?.startViewTransition) {
+			store.isDark = !store.isDark
+			return
+		}
+		const transition = (window?.document as any)?.startViewTransition(() => {
+			store.isDark = !store.isDark
+		})
+		transition.ready.then(() => {
+			const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
+			document.documentElement.animate(
+				{
+					clipPath: store.isDark ? [...clipPath].reverse() : clipPath
+				},
+				{
+					duration: 400,
+					easing: 'ease-in',
+					pseudoElement: store.isDark ? '::view-transition-old(root)' : '::view-transition-new(root)'
+				}
+			)
+		})
+	}
+
 	store.setIsDark(store.isDark)
 	store.setTheme(store.theme)
 </script>
@@ -64,22 +91,20 @@
 			</div>
 			<div class="line-item">
 				<el-tooltip content="暗黑模式 / 亮白模式">
-					<el-switch
-						v-model="store.isDark"
-						inline-prompt
-						:active-icon="Sunny"
-						:inactive-icon="Moon"
-						@change="store.setIsDark"
-					/>
+					<el-button plain circle :icon="store.isDark ? Moon : Sunny" @click="switchMode($event)" />
 				</el-tooltip>
 			</div>
 			<div class="line-item">
 				<el-dropdown placement="bottom" trigger="click" @command="store.setTheme">
-					<el-button plain circle>
-						<template #icon>
-							<em-icons style="font-size: 20px" icon-class="color" />
-						</template>
-					</el-button>
+					<div>
+						<el-tooltip content="主题切换">
+							<el-button plain circle>
+								<template #icon>
+									<em-icons style="font-size: 20px" icon-class="color" />
+								</template>
+							</el-button>
+						</el-tooltip>
+					</div>
 					<template #dropdown>
 						<el-dropdown-menu>
 							<el-dropdown-item
@@ -88,10 +113,7 @@
 								:key="'themes' + index"
 								:tabindex="index"
 								class="dropdown-item-li"
-								:style="{
-									backgroundColor: item.val === store.theme ? 'var(--el-color-primary-light-9)' : '',
-									color: item.val === store.theme ? 'var(--el-color-primary)' : ''
-								}"
+								:disabled="item.val === store.theme"
 							>
 								<span style="margin-right: 10px">
 									{{ item.label }}
@@ -110,21 +132,22 @@
 			</div>
 			<div class="line-item">
 				<el-dropdown placement="bottom" trigger="click">
-					<el-button plain circle>
-						<template #icon>
-							<em-icons style="font-size: 20px" icon-class="international" />
-						</template>
-					</el-button>
+					<div>
+						<el-tooltip content="中英文切换">
+							<el-button plain circle>
+								<template #icon>
+									<em-icons style="font-size: 20px" icon-class="international" />
+								</template>
+							</el-button>
+						</el-tooltip>
+					</div>
 					<template #dropdown>
 						<el-dropdown-menu>
 							<el-dropdown-item
 								v-for="(item, index) in languages"
 								@click="store.setLang(item.val)"
 								:key="'lang' + index"
-								:style="{
-									backgroundColor: item.val === store.lang ? 'var(--el-color-primary-light-9)' : '',
-									color: item.val === store.lang ? 'var(--el-color-primary)' : ''
-								}"
+								:disabled="item.val === store.lang"
 							>
 								{{ item.label }}
 							</el-dropdown-item>
@@ -133,13 +156,15 @@
 				</el-dropdown>
 			</div>
 			<div class="line-item">
-				<a :href="homepage" target="_blank">
-					<el-button plain circle>
-						<template #icon>
-							<em-icons style="font-size: 20px" icon-class="github" />
-						</template>
-					</el-button>
-				</a>
+				<el-tooltip content="Github">
+					<a :href="homepage" target="_blank">
+						<el-button plain circle>
+							<template #icon>
+								<em-icons style="font-size: 20px" icon-class="github" />
+							</template>
+						</el-button>
+					</a>
+				</el-tooltip>
 			</div>
 			<div class="line-item">
 				<div v-if="store.isLogin">

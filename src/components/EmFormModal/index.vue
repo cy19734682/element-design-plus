@@ -64,10 +64,6 @@
 		showLoading.value = Boolean(val)
 		formModalRef.value.changeLoading(val === undefined ? false : val)
 	}
-  const getDataGroup = () => {
-    /*获取用户已填数据*/
-    return formModalRef.value.getDataGroup()
-  }
 	const open = () => {
 		/*触发打开弹框事件，公开*/
 		openModal.value = true
@@ -98,7 +94,6 @@
 		updateDataGroup,
 		updateFormDataT,
 		changeLoading,
-    getDataGroup,
 		open,
 		close,
 		submit

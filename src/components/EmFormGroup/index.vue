@@ -52,10 +52,6 @@
 		/*改变弹框loading状态，私有*/
 		formGroupRef.value.changeLoading(val === undefined ? false : val)
 	}
-  const getDataGroup = () => {
-    /*获取用户已填数据*/
-    return formGroupRef.value.getDataGroup()
-  }
 	const onSubmit = (data: Record<string, any>) => {
 		/*响应提交事件提交数据，私有*/
 		emit('on-search', data)
@@ -71,7 +67,6 @@
 		updateDataGroup,
 		updateFormDataT,
 		changeLoading,
-    getDataGroup,
 		submit
 	})
 </script>

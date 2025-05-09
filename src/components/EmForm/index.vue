@@ -4,6 +4,7 @@
 		ElFormItem,
 		ElInput,
 		ElInputNumber,
+		ElInputTag,
 		ElSwitch,
 		ElSlider,
 		ElRate,
@@ -146,11 +147,11 @@
 		return showing
 	}
 
-  /**
-   *
-   * 判断表单项是否展示（私有）
-   * @param show 表单项的展示配置数据
-   */
+	/**
+	 *
+	 * 判断表单项是否展示（私有）
+	 * @param show 表单项的展示配置数据
+	 */
 	const dealIfItem = (show: Record<string, any>) => {
 		let isShow = false
 		if (Array.isArray(show.val)) {
@@ -495,7 +496,7 @@
 								v-for="radioItem of item.options"
 								:key="'radioItem' + radioItem.val"
 								:value="radioItem.val"
-                :label="radioItem.label || radioItem.val || ''"
+								:label="radioItem.label || radioItem.val || ''"
 								:border="item.itemBorder || false"
 								:disabled="!!radioItem.disabled"
 							/>
@@ -505,7 +506,7 @@
 								v-for="radioItem of item.options"
 								:key="'radioItem' + radioItem.val"
 								:value="radioItem.val"
-                :label="radioItem.label || radioItem.val || ''"
+								:label="radioItem.label || radioItem.val || ''"
 								:border="item.itemBorder || false"
 								:disabled="!!radioItem.disabled"
 							/>
@@ -536,7 +537,7 @@
 								v-for="checkItem of item.options"
 								:key="'optionItem' + checkItem.val"
 								:value="checkItem.val"
-                :label="checkItem.label || checkItem.val"
+								:label="checkItem.label || checkItem.val"
 								:border="item.itemBorder || false"
 								:disabled="!!checkItem.disabled"
 							/>
@@ -714,12 +715,30 @@
 						:placement="item.placement"
 						@update:modelValue="reValidateAndChangeHandle($event, item)"
 					/>
+					<!--标签输入框-->
+					<el-input-tag
+						v-else-if="item.type === 'inputTag'"
+						v-model="dataGroup[item.key]"
+						:disabled="item.disabled || disabled"
+						:max="item.max"
+						:tag-type="item.tagType"
+						:tag-effect="item.tagEffect"
+						:trigger="item.trigger"
+						:draggable="item.draggable || false"
+						:readonly="item.readonly"
+            :size="item.size"
+						:placeholder="item.placeholder || t('em.pInput')"
+						clearable
+						@change="itemChange($event, item)"
+					/>
 					<!--自定义选项-->
 					<div v-else-if="item.type === 'custom'" class="inlineBlock wd100">
 						<slot :name="item.slotName" :data-group="dataGroup" />
 					</div>
-          <!--表单项提示文字-->
-          <div v-if="Boolean(item.info)" class="em-item-info" :style="{color: item.infoColor || '#409eff'}">{{ item.info }}</div>
+					<!--表单项提示文字-->
+					<div v-if="Boolean(item.info)" class="em-item-info" :style="{ color: item.infoColor || '#409eff' }">{{
+						item.info
+					}}</div>
 				</el-form-item>
 			</template>
 			<!--长提交按钮-->

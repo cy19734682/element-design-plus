@@ -156,6 +156,11 @@
 			key: 'fs'
 		},
 		{
+			type: 'inputTag',
+			label: '标签',
+			key: 'tags',
+		},
+		{
 			type: 'area',
 			label: '行政区域',
 			key: 'areaCode',
@@ -272,6 +277,9 @@
 			required: true
 		},
 		step: {
+			required: true
+		},
+		tags: {
 			required: true
 		},
 		open: {

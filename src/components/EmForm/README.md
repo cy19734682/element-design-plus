@@ -321,6 +321,7 @@
 |  disabled   |        是否禁用         |          boolean          |    -    | false |
 
 #### colorGroup 颜色组选择
+详情见[EmColorGroup](../EmColorGroup/README.md)
 
 |       参数        |    说明     |            类型             |   可选值   |  默认值  |
 |:---------------:|:---------:|:-------------------------:|:-------:|:-----:|
@@ -359,6 +360,19 @@
 | placeholder |        输入框占位符        | String  |             —              |  请选择   |
 |  placement  |       弹窗从哪里弹出        | String  | [同el-popover中的placement属性] | bottom |
 |  disabled   |         是否禁用         | Boolean |             —              | false  |
+
+#### inputTag 标签输入框
+
+|    参数     |     说明      |   类型    |             可选值             |  默认值  |
+|:---------:|:-----------:|:-------:|:---------------------------:|:-----:|
+|    max    | 	可添加标签的最大数量 | number  |              —              |   -   |
+|  tagType  |    	标签类型    |  enum   | success/info/warning/danger |   -   |
+| tagEffect |    标签效果     |  enum   |      light/dark/plain       |   -   |
+|  trigger  |  触发输入标签的按键  |  enum   |         Enter/Space         |   -   |
+| draggable |  是否可以拖动标签   | boolean |              -              | false |
+|   size    |     大小      |  enum   |     small/large/default     | small |
+| readonly  |    是否可读     | boolean |              -              | false |
+| disabled  |    是否禁用     | boolean |              -              | false |
 
 #### custom 自定义选项
 

@@ -6,7 +6,8 @@
 
 const modules: Record<string, any> = import.meta.glob('./**/*.md', {
 	eager: true,
-	as: 'raw'
+  query: '?raw',
+  import: 'default'
 })
 
 let mds: Record<string, any> = {}

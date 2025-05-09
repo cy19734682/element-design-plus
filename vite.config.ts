@@ -135,6 +135,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
 		css: {
 			preprocessorOptions: {
 				scss: {
+          api: 'modern-compiler',
 					javascriptEnabled: true,
 					rewriteUrls: 'all',
 					math: 'always'
